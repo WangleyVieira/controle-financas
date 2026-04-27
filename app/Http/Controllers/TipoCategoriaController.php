@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TipoCategoriaRequest;
 use App\Models\TipoCategoria;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TipoCategoriaController extends Controller
@@ -25,43 +26,40 @@ class TipoCategoriaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TipoCategoriaRequest $request)
     {
-        //
-    }
+        try {
+            TipoCategoria::create($request->validated() + [
+                'cadastradoPorUsuario' => Auth::user()->id,
+            ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TipoCategoria $tipoCategoria)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TipoCategoria $tipoCategoria)
-    {
-        //
+            Alert::toast('Tipo de Categoria cadastrado com sucesso!','success');
+            return redirect()->route('configuracao.tipo_categoria.index');
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.','error');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TipoCategoria $tipoCategoria)
+    public function update(TipoCategoriaRequest $request, $id)
     {
-        //
+        try {
+            $tipoCategoria = TipoCategoria::findOrFail($id);
+            $tipoCategoria->update($request->validated());
+
+            Alert::toast('Tipo de Categoria atualizado com sucesso!','success');
+            return redirect()->route('configuracao.tipo_categoria.index');
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.','error');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

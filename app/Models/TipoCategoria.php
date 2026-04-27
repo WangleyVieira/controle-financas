@@ -9,6 +9,10 @@ class TipoCategoria extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['descricao'];
+    protected $fillable = ['descricao', 'cadastradoPorUsuario'];
 
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'cadastradoPorUsuario');
+    }
 }

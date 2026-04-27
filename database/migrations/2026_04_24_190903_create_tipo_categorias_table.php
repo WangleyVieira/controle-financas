@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('tipo_categorias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao');
+            $table->uuid('cadastradoPorUsuario')->nullable();
+            $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
         });

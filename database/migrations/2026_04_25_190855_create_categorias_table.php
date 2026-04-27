@@ -18,6 +18,9 @@ return new class extends Migration
             $table->integer('tipo_categoria_id')->unsigned();
             $table->foreign('tipo_categoria_id')->references('id')->on('tipo_categorias');
 
+            $table->uuid('cadastradoPorUsuario')->nullable();
+            $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -31,7 +31,7 @@
                             Páginas
                         </li>
 
-                        <li class="sidebar-item active">
+                        <li class="sidebar-item">
                             <a class="sidebar-link" href="index.html">
                                 <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                             </a>
@@ -97,8 +97,8 @@
                             Configurações
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="maps-google.html">
+                        <li class="sidebar-item {{ Request::is('configuracao/categoria') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('configuracao.categoria.index') }}">
                             <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Categorias</span>
                             </a>
                         </li>
@@ -114,12 +114,6 @@
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">Pessoas</span>
                             </a>
                         </li>
-
-                        {{-- <li class="sidebar-item">
-                            <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
-                            </a>
-                        </li> --}}
 
                     </ul>
                 </div>
@@ -166,9 +160,6 @@
                     <div class="container-fluid">
                         <div class="row text-muted">
                             <div class="col-6 text-start">
-                                {{-- <p class="mb-0">
-                                    <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a>								&copy;
-                                </p> --}}
                             </div>
                         </div>
                     </div>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriaRequest;
 use App\Models\Categoria;
-use Illuminate\Http\Request;
+use App\Models\TipoCategoria;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoriaController extends Controller
 {
@@ -12,54 +15,73 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
-    }
+        try {
+            $categorias = Categoria::get();
+            $tipoCategorias = TipoCategoria::get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+            return view('config.categoria.index', compact('categorias', 'tipoCategorias'));
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.','error');
+            return redirect()->back();
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
-        //
+        try {
+            Categoria::create($request->validated() + [
+                'cadastradoPorUsuario' => Auth::user()->id,
+            ]);
+
+            Alert::toast('Categoria cadastrado com sucesso!','success');
+            return redirect()->route('configuracao.categoria.index');
+
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.','error');
+            return redirect()->back();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categoria $categoria)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categoria $categoria)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(CategoriaRequest $request, $id)
     {
-        //
+        try {
+            $categoria = Categoria::findOrFail($id);
+            $categoria->update($request->validated());
+
+            Alert::toast('Categoria atualizado com sucesso!','success');
+            return redirect()->route('configuracao.categoria.index');
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.','error');
+            return redirect()->back();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
-        //
+        try {
+            $categoria = Categoria::findOrFail($id);
+            $categoria->delete();
+
+            Alert::toast('Categoria excluído com sucesso!','success');
+            return redirect()->route('configuracao.categoria.index');
+
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.','error');
+            return redirect()->back();
+        }
     }
 }
