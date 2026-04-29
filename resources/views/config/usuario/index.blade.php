@@ -6,18 +6,18 @@
 
     <div class="card" style="background-color:white">
         <div class="card-header">
-            <h4>Listagem de Categorias</h4><hr>
+            <h4>Listagem de Usuários</h4><hr>
         </div>
 
         <div class="card-body">
             <div class="col-md-12 text-left mt-0 pt-0 mb-4">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCadastrar">
-                    <i class="fas fa-plus-square"></i>&nbsp Cadastrar Categoria
+                    <i class="fas fa-plus-square"></i>&nbsp Cadastrar Usuário
                 </button>
             </div>
-            @if ($categorias->isEmpty())
+            @if ($users->isEmpty())
                 <div>
-                    <h1 class="alert-info px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Não há categorias cadastrados</h1>
+                    <h1 class="alert-info px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Não há Usuários Cadastrados</h1>
                 </div>
             @else
                 <div class="table-responsive">
@@ -25,35 +25,35 @@
                         <thead style="background-color:#e2e7e6">
                             <tr>
                                 <th>ID</th>
-                                <th>Descrição</th>
-                                <th>Tipo de Categoria</th>
+                                <th>Nome</th>
+                                <th>Email</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categorias as $categoria)
+                            @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $categoria->id }}</td>
-                                    <td>{{ $categoria->descricao }}</td>
-                                    <td>{{ $categoria->tipo_categoria_id != null ? $categoria->tipoCategoria->descricao : '' }}</td>
-                                     <td>
-                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modalExcluir{{ $categoria->id }}"
+                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modalExcluir{{ $user->id }}"
                                             title="excluir"><i class="fas fa-trash-alt"></i></button>
-                                        <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#modalAlterar{{ $categoria->id }}"
+                                        <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#modalAlterar{{ $user->id }}"
                                             title="excluir"><i class="fas fa-pen"></i></button>
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="modalAlterar{{ $categoria->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="modalLabelExcluir{{ $categoria->id }}" aria-hidden="true">
+                                <div class="modal fade" id="modalAlterar{{ $user->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalAlterar{{ $user->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.categoria.update', $categoria->id) }}">
+                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.usuario.update', $user->id) }}">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-header btn-warning">
-                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $categoria->id }}">
-                                                        Editar Categoria
+                                                    <h5 class="modal-title text-center" id="modalLabelAlterar{{ $user->id }}">
+                                                        Editar Usuário
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -62,23 +62,17 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
-                                                            <label class="form-label">Descrição</label>
-                                                            <input class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao" value="{{ $categoria->descricao }}">
-                                                             @error('descricao')
-                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                            @enderror
+                                                            <label class="form-label">*Nome</label>
+                                                            <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') ?? $user->name }}">
                                                         </div>
+                                                        @error('name')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                        @enderror
                                                         <div class="form-group col-md-6">
-                                                            <label class="form-label">Tipo de Categoria</label>
-                                                            <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                                                <option value="" selected disabled>--Selecione--</option>
-                                                                @foreach ($tipoCategorias as $tipoCategoria)
-                                                                    <option value="{{ $tipoCategoria->id }}" {{ $categoria->tipo_categoria_id == $tipoCategoria->id ? 'selected' : '' }}>
-                                                                        {{ $tipoCategoria->descricao }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('tipo_categoria_id')
+                                                            <label class="form-label">*E-mail</label>
+                                                            <input class="form-control @error('email') is-invalid @enderror" type="text" name="email"
+                                                                id="email" placeholder="Informe o e-mail" value="{{ old('email') ?? $user->email }}">
+                                                            @error('email')
                                                                 <div class="invalid-feedback">{{ $message }}</div><br>
                                                             @enderror
                                                         </div>
@@ -93,16 +87,16 @@
                                     </div>
                                 </div>
 
-                                <div class="modal fade" id="modalExcluir{{ $categoria->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="modalLabelExcluir{{ $categoria->id }}" aria-hidden="true">
+                                <div class="modal fade" id="modalExcluir{{ $user->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalLabelExcluir{{ $user->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.categoria.destroy', $categoria->id) }}">
+                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.usuario.destroy', $user->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="modal-header btn-danger">
-                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $categoria->id }}">
-                                                        Excluir Categoria
+                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $user->id }}">
+                                                        Excluir Usuário
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -110,7 +104,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group col-md-12 mb-3">
-                                                        Tem certeza que deseja excluir categoria <strong>{{ $categoria->descricao }}</strong>?
+                                                        Tem certeza que deseja excluir o usuário <strong>{{ $user->name }}</strong>?
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -133,11 +127,12 @@
     <div class="modal fade" id="modalCadastrar" tabindex="-1" role="dialog" aria-labelledby="modalLabelCadastrar" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
-                <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.categoria.store') }}">
+                <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.usuario.store') }}">
                     @csrf
+
                     <div class="modal-header btn-info">
                         <h5 class="modal-title text-center" id="modalLabelCadastrar">
-                            Cadastrar Categoria
+                            Cadastrar Usuário
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -146,24 +141,34 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="form-label">*Descrição</label>
-                                <input class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao"
-                                    id="descricao" placeholder="Informe a descrição" value="{{ old('descricao') }}">
-                                @error('descricao')
+                                <label class="form-label">*Nome</label>
+                                <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
+                                    id="name" placeholder="Informe o nome" value="{{ old('name') }}">
+                                @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div><br>
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-label">Tipo de Categoria</label>
-                                <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                    <option value="" selected disabled>--Selecione--</option>
-                                    @foreach ($tipoCategorias as $tipoCategoria)
-                                        <option value="{{ $tipoCategoria->id }}" {{ old('tipo_categoria_id') == $tipoCategoria->id ? 'selected' : '' }}>
-                                            {{ $tipoCategoria->descricao }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('tipo_categoria_id')
+                                <label class="form-label">*E-mail</label>
+                                <input class="form-control @error('email') is-invalid @enderror" type="text" name="email"
+                                    id="email" placeholder="Informe o e-mail" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div><br>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label">*Senha</label>
+                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password"
+                                    id="password" placeholder="Informe a senha" value="{{ old('password') }}">
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div><br>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="form-label">*Confirmação</label>
+                                <input class="form-control @error('confirmacao') is-invalid @enderror" type="password" name="confirmacao"
+                                    id="confirmacao" placeholder="Confirme a senha" value="{{ old('confirmacao') }}">
+                                @error('confirmacao')
                                     <div class="invalid-feedback">{{ $message }}</div><br>
                                 @enderror
                             </div>
@@ -189,36 +194,3 @@
         </script>
     @endsection
 @endif
-
-@section('scripts')
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                language: {
-                    noResults: function() {
-                        return "Nenhum resultado encontrado";
-                    }
-                },
-                closeOnSelect: true,
-                width: '100%',
-            });
-
-            $('#datatables-reponsive').dataTable({
-                "oLanguage": {
-                    "sLengthMenu": "Mostrar _MENU_ registros por página",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-                    "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
-                    "sInfoFiltered": "(filtrado de _MAX_ registros)",
-                    "sSearch": "Pesquisar: ",
-                    "oPaginate": {
-                        "sFirst": "Início",
-                        "sPrevious": "Anterior",
-                        "sNext": "Próximo",
-                        "sLast": "Último"
-                    }
-                },
-            });
-        });
-    </script>
-@endsection

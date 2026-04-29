@@ -53,8 +53,14 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item {{ Request::is('lancamentos') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('lancamento.index') }}">
+                            <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Lançamentos</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="ui-forms.html">
+                            <a class="sidebar-link" href="#">
                             <i class="align-middle" data-feather="trending-down"></i> <span class="align-middle">Gastos Anuais</span>
                             </a>
                         </li>
@@ -109,9 +115,9 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Pessoas</span>
+                        <li class="sidebar-item {{ Request::is('configuracao/usuario') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('configuracao.usuario.index') }}">
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Usuários</span>
                             </a>
                         </li>
 

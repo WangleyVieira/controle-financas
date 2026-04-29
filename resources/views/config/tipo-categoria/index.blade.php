@@ -60,8 +60,11 @@
                                                 <div class="modal-body">
                                                     <div class="form-group col-md-12">
                                                         <label class="form-label">Descrição</label>
-                                                        <input class="form-control" type="text" name="descricao" value="{{ $tipoCategoria->descricao }}">
+                                                        <input class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao" value="{{ $tipoCategoria->descricao }}">
                                                     </div>
+                                                    @error('descricao')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-redo"></i>&nbsp Cancelar</button>
