@@ -6,18 +6,18 @@
 
     <div class="card" style="background-color:white">
         <div class="card-header">
-            <h4>Listagem de Lançamentos</h4><hr>
+            <h4>Listagem de Responsáveis</h4><hr>
         </div>
 
         <div class="card-body">
             <div class="col-md-12 text-left mt-0 pt-0 mb-4">
-                <a type="button" class="btn btn-success" href="{{ route('lancamento.create') }}">
-                    <i class="fas fa-plus-square"></i>&nbsp Cadastrar Lançamento
-                </a>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCadastrar">
+                    <i class="fas fa-plus-square"></i>&nbsp Cadastrar Responsável
+                </button>
             </div>
-            @if ($lancamentos->isEmpty())
+            @if ($responsaveis->isEmpty())
                 <div>
-                    <h1 class="alert-info px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Não há lançamentos cadastrados</h1>
+                    <h1 class="alert-info px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Não há responsáveis cadastrados</h1>
                 </div>
             @else
                 <div class="table-responsive">
@@ -26,34 +26,32 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Descrição</th>
-                                <th>Tipo de Categoria</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($lancamentos as $lancamento)
+                            @foreach ($responsaveis as $responsavel)
                                 <tr>
-                                    <td>{{ $lancamento->id }}</td>
-                                    <td>{{ $lancamento->descricao }}</td>
-                                    <td>{{ $lancamento->categoria_id != null ? $lancamento->categoria->descricao : '' }}</td>
-                                     <td>
-                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modalExcluir{{ $lancamento->id }}"
+                                    <td>{{ $responsavel->id }}</td>
+                                    <td>{{ $responsavel->nome }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modalExcluir{{ $responsavel->id }}"
                                             title="excluir"><i class="fas fa-trash-alt"></i></button>
-                                        <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#modalAlterar{{ $lancamento->id }}"
+                                        <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#modalAlterar{{ $responsavel->id }}"
                                             title="excluir"><i class="fas fa-pen"></i></button>
                                     </td>
                                 </tr>
 
-                                {{-- <div class="modal fade" id="modalAlterar{{ $lancamento->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="modalLabelExcluir{{ $lancamento->id }}" aria-hidden="true">
+                                <div class="modal fade" id="modalAlterar{{ $responsavel->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalLabelExcluir{{ $responsavel->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.lancamento.update', $lancamento->id) }}">
+                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.responsavel.update', $responsavel->id) }}">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-header btn-warning">
-                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $lancamento->id }}">
-                                                        Editar Lançamento
+                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $responsavel->id }}">
+                                                        Editar Responsável
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -61,25 +59,11 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <label class="form-label">Descrição</label>
-                                                            <input class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao" value="{{ $lancamento->descricao }}">
-                                                             @error('descricao')
+                                                        <div class="form-group col-md-12">
+                                                            <label class="form-label">*Nome</label>
+                                                            <input class="form-control @error('nome') is-invalid @enderror" type="text" name="nome" value="{{ $responsavel->nome }}">
+                                                             @error('nome')
                                                                 <div class="invalid-feedback">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label class="form-label">Tipo de Categoria</label>
-                                                            <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                                                <option value="" selected disabled>--Selecione--</option>
-                                                                @foreach ($tipoCategorias as $tipoCategoria)
-                                                                    <option value="{{ $tipoCategoria->id }}" {{ $lancamento->tipo_categoria_id == $tipoCategoria->id ? 'selected' : '' }}>
-                                                                        {{ $tipoCategoria->descricao }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('tipo_categoria_id')
-                                                                <div class="invalid-feedback">{{ $message }}</div><br>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -91,18 +75,18 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
 
-                                {{-- <div class="modal fade" id="modalExcluir{{ $lancamento->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="modalLabelExcluir{{ $lancamento->id }}" aria-hidden="true">
+                                <div class="modal fade" id="modalExcluir{{ $responsavel->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="modalLabelExcluir{{ $responsavel->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.lancamento.destroy', $lancamento->id) }}">
+                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.responsavel.destroy', $responsavel->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="modal-header btn-danger">
-                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $lancamento->id }}">
-                                                        Excluir Lançamento
+                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $responsavel->id }}">
+                                                        Excluir Responsável
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -110,7 +94,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group col-md-12 mb-3">
-                                                        Tem certeza que deseja excluir categoria <strong>{{ $categoria->descricao }}</strong>?
+                                                        Tem certeza que deseja excluir o(a) responsável <strong>{{ $responsavel->nome }}</strong>?
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -120,7 +104,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -129,7 +113,52 @@
         </div>
     </div>
 
+    {{-- Modal para cadastrar --}}
+    <div class="modal fade" id="modalCadastrar" tabindex="-1" role="dialog" aria-labelledby="modalLabelCadastrar" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ">
+                <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.responsavel.store') }}">
+                    @csrf
+                    <div class="modal-header btn-info">
+                        <h5 class="modal-title text-center" id="modalLabelCadastrar">
+                            Cadastrar Responsável
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="form-label">*Nome</label>
+                                <input class="form-control @error('nome') is-invalid @enderror" type="text" name="nome"
+                                    id="nome" placeholder="Informe o nome" value="{{ old('nome') }}">
+                                @error('nome')
+                                    <div class="invalid-feedback">{{ $message }}</div><br>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="button_submit btn btn-primary"><i class="fas fa-save"></i>&nbsp Salvar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-redo"></i>&nbsp Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
+@if($errors->any())
+    @section('scripts')
+        <script>
+            $(document).ready(function() {
+                $('#modalCadastrar').modal('show');
+            });
+        </script>
+    @endsection
+@endif
 
 @section('scripts')
     <script>

@@ -34,7 +34,7 @@ class CategoriaController extends Controller
     {
         try {
             Categoria::create($request->validated() + [
-                'cadastradoPorUsuario' => Auth::user()->id,
+                'cadastrado_por_usuario' => Auth::user()->id,
             ]);
 
             Alert::toast('Categoria cadastrado com sucesso!','success');

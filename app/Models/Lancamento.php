@@ -12,27 +12,9 @@ class Lancamento extends Model
     protected $table = 'lancamentos';
 
     protected $fillable = [
-        'tipo',
-        'descricao',
-        'valor',
-        'categoria_id',
-        'data_vencimento',
-        'dia_pagamento',
-        'is_pago',
-        'data_pagamento',
-        'responsavel',
-        'observacao',
-        'link_pagamento',
-        'cadastrado_por_usuario',
-        'is_parcelado',
-        'parcela_atual',
-        'total_parcelas',
-        'valor_parcela',
-        'grupo_parcelamento',
-        'is_fixo',
-        'valor_deborah',
-        'valor_wangley',
-        'valor_casal',
+        'tipo', 'descricao', 'valor', 'categoria_id','data_vencimento', 'dia_pagamento','is_pago', 'data_pagamento',
+        'responsavel_id', 'observacao', 'link_pagamento', 'cadastrado_por_usuario', 'is_parcelado', 'parcela_atual',
+        'total_parcelas', 'valor_parcela', 'grupo_parcelamento', 'is_fixo', 'valor_deborah', 'valor_wangley', 'valor_casal',
     ];
 
     protected $casts = [
@@ -59,5 +41,10 @@ class Lancamento extends Model
     public function usuario()
     {
         return $this->belongsTo(User::class, 'cadastrado_por_usuario');
+    }
+
+    public function responsavel()
+    {
+        return $this->belongsTo(Responsavel::class, 'responsavel_id');
     }
 }

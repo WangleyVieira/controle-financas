@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipo_categorias', function (Blueprint $table) {
+        Schema::create('responsavels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descricao');
+            $table->string('nome');
             $table->uuid('cadastrado_por_usuario')->nullable();
             $table->foreign('cadastrado_por_usuario')->references('id')->on('users');
             $table->timestamps();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_categorias');
+        Schema::dropIfExists('responsavels');
     }
 };

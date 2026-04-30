@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LancamentoController;
+use App\Http\Controllers\ResponsavelController;
 use App\Http\Controllers\TipoCategoriaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,13 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [UserController::class, 'store'])->name('store');
             Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
             Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::group(['prefix' => '/responsavel', 'as' => 'responsavel.'], function() {
+            Route::get('/', [ResponsavelController::class, 'index'])->name('index');
+            Route::post('/store', [ResponsavelController::class, 'store'])->name('store');
+            Route::put('/update/{id}', [ResponsavelController::class, 'update'])->name('update');
+            Route::delete('/destroy/{id}', [ResponsavelController::class, 'destroy'])->name('destroy');
         });
     });
 

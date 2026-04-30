@@ -5,16 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Categoria extends Model
+class Responsavel extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['descricao', 'tipo_categoria_id', 'cadastrado_por_usuario'];
-
-    public function tipoCategoria()
-    {
-        return $this->belongsTo(TipoCategoria::class);
-    }
+    protected $fillable = ['nome', 'cadastrado_por_usuario'];
 
     public function usuario()
     {

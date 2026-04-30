@@ -32,7 +32,7 @@ class TipoCategoriaController extends Controller
     {
         try {
             TipoCategoria::create($request->validated() + [
-                'cadastradoPorUsuario' => Auth::user()->id,
+                'cadastrado_por_usuario' => Auth::user()->id,
             ]);
 
             Alert::toast('Tipo de Categoria cadastrado com sucesso!','success');

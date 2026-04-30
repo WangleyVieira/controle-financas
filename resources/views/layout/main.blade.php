@@ -115,6 +115,12 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item {{ Request::is('configuracao/responsavel') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('configuracao.responsavel.index') }}">
+                            <i class="align-middle" data-feather="target"></i> <span class="align-middle">Responsável</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-item {{ Request::is('configuracao/usuario') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.usuario.index') }}">
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">Usuários</span>

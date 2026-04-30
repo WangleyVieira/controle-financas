@@ -5,21 +5,33 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LancamentoRequest;
 use App\Models\Categoria;
 use App\Models\Lancamento;
+use App\Models\Responsavel;
 use App\Models\TipoCategoria;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LancamentoController extends Controller
 {
     public function index()
     {
-        return redirect()->route('lancamento.create');
+        try {
+            $lancamentos = Lancamento::get();
+
+            return view('lancamento.index', compact('lancamentos'));
+
+        } catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+            return redirect()->back();
+        }
     }
 
     public function create()
     {
         try {
+            $categorias = Categoria::get();
+            $tipoCategorias = TipoCategoria::get();
+            $responsaveis = Responsavel::get();
+
+            return view('lancamento.create', compact('categorias', 'tipoCategorias', 'responsaveis'));
 
         } catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
