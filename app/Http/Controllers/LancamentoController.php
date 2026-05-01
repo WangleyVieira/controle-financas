@@ -11,6 +11,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class LancamentoController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         try {
@@ -24,6 +27,9 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         try {
@@ -31,7 +37,7 @@ class LancamentoController extends Controller
             $tipoCategorias = TipoCategoria::get();
             $responsaveis = Responsavel::get();
 
-            return view('lancamento.create', compact('categorias', 'tipoCategorias', 'responsaveis'));
+            return view('lancamento.form', compact('categorias', 'tipoCategorias', 'responsaveis'));
 
         } catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
@@ -39,9 +45,16 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(LancamentoRequest $request)
     {
         try {
+            Lancamento::create($request->validated());
+
+            Alert::toast('Lancamento cadastrado com sucesso!', 'success');
+            return redirect()->route('lancamento.index');
 
         }
         catch (\Exception $ex) {
@@ -50,14 +63,59 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        try {
+            $lancamento = Lancamento::findOrFail($id);
+            $categorias = Categoria::get();
+            $tipoCategorias = TipoCategoria::get();
+            $responsaveis = Responsavel::get();
+
+            return view('lancamento.form', compact('lancamento', 'categorias', 'tipoCategorias', 'responsaveis'));
+
+        } catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(LancamentoRequest $request, $id)
     {
-        //
+        try {
+            $lancamento = Lancamento::findOrFail($id);
+            $lancamento->update($request->validated());
+
+            Alert::toast('Lancamento atualizado com sucesso!', 'success');
+            return redirect()->route('lancamento.index');
+
+        }
+        catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+            return redirect()->back()->withInput();
+        }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($id)
     {
-        //
-    }
+        try {
+            $lancamento = Lancamento::findOrFail($id);
+            $lancamento->delete();
 
+            Alert::toast('Lancamento excluído com sucesso!', 'success');
+            return redirect()->route('lancamento.index');
+
+        } catch (\Exception $ex) {
+            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+            return redirect()->back();
+        }
+    }
 }

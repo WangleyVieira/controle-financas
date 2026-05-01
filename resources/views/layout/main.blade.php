@@ -47,13 +47,13 @@
                             Finanças
                         </li>
 
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="ui-buttons.html">
                             <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Entradas</span>
                             </a>
-                        </li>
+                        </li> --}}
 
-                        <li class="sidebar-item {{ Request::is('lancamentos') ? 'active' : '' }}">
+                        <li class="sidebar-item {{ Request::is('lancamentos*') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('lancamento.index') }}">
                             <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Lançamentos</span>
                             </a>

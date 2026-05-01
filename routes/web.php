@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/create', [LancamentoController::class, 'create'])->name('create');
             Route::post('/store', [LancamentoController::class, 'store'])->name('store');
             Route::put('/update/{id}', [LancamentoController::class, 'update'])->name('update');
+            Route::get('/edit/{id}', [LancamentoController::class, 'edit'])->name('edit');
             Route::delete('/destroy/{id}', [LancamentoController::class, 'destroy'])->name('destroy');
         });
 

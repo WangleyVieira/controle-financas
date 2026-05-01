@@ -26,7 +26,12 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Descrição</th>
+                                <th>Responsável</th>
                                 <th>Tipo de Categoria</th>
+                                <th>Valor</th>
+                                <th>Competência(referência mensal)</th>
+                                <th>Já foi pago?</th>
+                                <th>A receber?</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -35,63 +40,31 @@
                                 <tr>
                                     <td>{{ $lancamento->id }}</td>
                                     <td>{{ $lancamento->descricao }}</td>
-                                    <td>{{ $lancamento->categoria_id != null ? $lancamento->categoria->descricao : '' }}</td>
-                                     <td>
+                                    <td>{{ $lancamento->responsavel_id != null ? $lancamento->responsavel->nome : '' }}</td>
+                                    <td>{{ $lancamento->tipo_categoria_id != null ? $lancamento->tipoCategoria->descricao : '' }}</td>
+                                    <td>R$ {{ number_format($lancamento->valor, 2, ',', '.') }}</td>
+                                    <td>{{ $lancamento->competencia }}</td>
+                                    <td>
+                                        @if ($lancamento->pago)
+                                            <span class="badge badge-success">Sim</span>
+                                        @else
+                                            <span class="badge badge-danger">Não</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($lancamento->a_receber)
+                                            <span class="badge badge-success">Sim</span>
+                                        @else
+                                            <span class="badge badge-danger">Não</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#modalExcluir{{ $lancamento->id }}"
                                             title="excluir"><i class="fas fa-trash-alt"></i></button>
-                                        <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="#modalAlterar{{ $lancamento->id }}"
-                                            title="excluir"><i class="fas fa-pen"></i></button>
+                                        <a type="button" class="btn btn-warning m-1" href="{{ route('lancamento.edit', $lancamento->id) }}"
+                                            title="editar"><i class="fas fa-pen"></i></a>
                                     </td>
                                 </tr>
-
-                                {{-- <div class="modal fade" id="modalAlterar{{ $lancamento->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="modalLabelExcluir{{ $lancamento->id }}" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.lancamento.update', $lancamento->id) }}">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="modal-header btn-warning">
-                                                    <h5 class="modal-title text-center" id="modalLabelExcluir{{ $lancamento->id }}">
-                                                        Editar Lançamento
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <label class="form-label">Descrição</label>
-                                                            <input class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao" value="{{ $lancamento->descricao }}">
-                                                             @error('descricao')
-                                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label class="form-label">Tipo de Categoria</label>
-                                                            <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                                                <option value="" selected disabled>--Selecione--</option>
-                                                                @foreach ($tipoCategorias as $tipoCategoria)
-                                                                    <option value="{{ $tipoCategoria->id }}" {{ $lancamento->tipo_categoria_id == $tipoCategoria->id ? 'selected' : '' }}>
-                                                                        {{ $tipoCategoria->descricao }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('tipo_categoria_id')
-                                                                <div class="invalid-feedback">{{ $message }}</div><br>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-redo"></i>&nbsp Cancelar</button>
-                                                    <button type="submit" class="button_submit btn btn-primary"><i class="fas fa-save"></i>&nbsp Salvar</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
                                 {{-- <div class="modal fade" id="modalExcluir{{ $lancamento->id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="modalLabelExcluir{{ $lancamento->id }}" aria-hidden="true">

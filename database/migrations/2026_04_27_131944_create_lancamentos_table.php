@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('lancamentos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo', 20)->default('gasto');
+            $table->string('competencia', 7);
             $table->string('descricao', 255);
             $table->decimal('valor', 12, 2);
             $table->date('data_vencimento');
             $table->unsignedTinyInteger('dia_pagamento')->nullable();
+            $table->boolean('is_receber')->default(false);
             $table->boolean('is_pago')->default(false);
             $table->date('data_pagamento')->nullable();
             $table->text('observacao')->nullable();
@@ -30,11 +32,20 @@ return new class extends Migration
 
             $table->boolean('is_fixo')->default(false);
 
+            $table->decimal('valor_deborah', 12, 2)->nullable();
+            $table->decimal('valor_wangley', 12, 2)->nullable();
+            $table->decimal('valor_casal', 12, 2)->nullable();
+            $table->decimal('deborah_falta_pagar', 12, 2)->nullable();
+            $table->decimal('wangley_falta_pagar', 12, 2)->nullable();
+
             $table->integer('responsavel_id')->unsigned();
             $table->foreign('responsavel_id')->references('id')->on('responsavels');
 
-            $$table->integer('categoria_id')->unsigned();
+            $table->integer('categoria_id')->unsigned();
             $table->foreign('categoria_id')->references('id')->on('categorias');
+
+            $table->integer('tipo_categoria_id')->unsigned();
+            $table->foreign('tipo_categoria_id')->references('id')->on('tipo_categorias');
 
             $table->uuid('cadastrado_por_usuario')->nullable();
             $table->foreign('cadastrado_por_usuario')->references('id')->on('users');
