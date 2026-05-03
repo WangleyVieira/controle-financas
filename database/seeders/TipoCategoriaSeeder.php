@@ -15,6 +15,7 @@ class TipoCategoriaSeeder extends Seeder
         DB::table('tipo_categorias')->insert([
             ['descricao' => 'Receita'],
             ['descricao' => 'Despesa'],
+            ['descricao' => 'Investimento'],
             ['descricao' => 'Ambos']
         ]);
     }

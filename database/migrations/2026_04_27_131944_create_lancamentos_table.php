@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lancamentos', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('tipo', 20)->default('gasto');
             $table->string('competencia', 7);
             $table->string('descricao', 255);
             $table->decimal('valor', 12, 2);
             $table->date('data_vencimento');
-            $table->unsignedTinyInteger('dia_pagamento')->nullable();
             $table->boolean('is_receber')->default(false);
             $table->boolean('is_pago')->default(false);
             $table->date('data_pagamento')->nullable();

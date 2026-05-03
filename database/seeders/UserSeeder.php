@@ -21,13 +21,13 @@ class UserSeeder extends Seeder
                 'id' => $uuid1,
                 'name' => 'Wangley',
                 'email' => 'wangley@gmail.com',
-                'password' => Hash::make('12345678')
+                'password' => Hash::make('123456')
             ],
             [
                 'id' => $uuid2,
                 'name' => 'Déborah',
                 'email' => 'deborah@gmail.com',
-                'password' => Hash::make('12345678')
+                'password' => Hash::make('123456')
             ]
         ]);
     }

@@ -21,7 +21,8 @@ class LancamentoController extends Controller
 
             return view('lancamento.index', compact('lancamentos'));
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
             return redirect()->back();
         }
@@ -39,7 +40,8 @@ class LancamentoController extends Controller
 
             return view('lancamento.form', compact('categorias', 'tipoCategorias', 'responsaveis'));
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
             return redirect()->back();
         }
@@ -76,7 +78,8 @@ class LancamentoController extends Controller
 
             return view('lancamento.form', compact('lancamento', 'categorias', 'tipoCategorias', 'responsaveis'));
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
             return redirect()->back();
         }
@@ -113,7 +116,8 @@ class LancamentoController extends Controller
             Alert::toast('Lancamento excluído com sucesso!', 'success');
             return redirect()->route('lancamento.index');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
             return redirect()->back();
         }

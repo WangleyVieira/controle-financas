@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col-12 col-xl-8">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">{{ $titulo }}</h5>
-                    </div><hr>
+                     <div class="card-header">
+                        <h4>{{ $titulo }}</h4><hr>
+                    </div>
                     <div class="card-body">
                         <form action="{{ $action }}" method="POST" id="form-lancamento">
                             @csrf
@@ -25,7 +25,7 @@
                             @endif
 
                             <div class="row">
-                                <div class="d-flex gap-2 flex-wrap form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label class="form-label">Categoria</label>
                                     <select name="categoria_id" id="categoria_id" class="form-control select2 @error('categoria_id') is-invalid @enderror">
                                         <option value="" selected disabled>--Selecione--</option>
@@ -39,7 +39,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div><br>
                                     @enderror
                                 </div>
-                                <div class="d-flex gap-2 flex-wrap form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label class="form-label">Tipo de Categoria</label>
                                     <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
                                         <option value="" selected disabled>--Selecione--</option>
@@ -53,11 +53,19 @@
                                         <div class="invalid-feedback">{{ $message }}</div><br>
                                     @enderror
                                 </div>
+                                <div class="form-group col-md-4">
+                                    <label for="competencia" class="form-label">Competência (MM/AAAA)</label>
+                                    <input type="text" class="form-control competencia-mask @error('competencia') is-invalid @enderror"
+                                        id="competencia" name="competencia" value="{{ old('competencia', $lancamento->competencia ?? now()->format('m/Y')) }}" placeholder="05/2026">
+                                    @error('competencia')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="row">
-                                <div class="d-flex gap-2 flex-wrap form-group col-md-8">
-                                    <label for="descricao" class="form-label">Descricao</label>
+                                <div class="form-group col-md-8">
+                                    <label for="descricao" class="form-label">Descrição</label>
                                     <input type="text" class="form-control @error('descricao') is-invalid @enderror"
                                         id="descricao" name="descricao" value="{{ old('descricao', $lancamento->descricao ?? null) }}"
                                         placeholder="Ex: Aluguel - Bairro Nova Campo Grande">
@@ -65,8 +73,8 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="d-flex gap-2 flex-wrap form-group col-md-4">
-                                    <label class="form-label">Responsavel</label>
+                                <div class="form-group col-md-4">
+                                    <label class="form-label">Responsável</label>
                                     <select name="responsavel_id" id="responsavel_id" class="form-control select2 @error('responsavel_id') is-invalid @enderror">
                                         <option value="" selected disabled>--Selecione--</option>
                                         @foreach ($responsaveis as $responsavel)
@@ -79,22 +87,24 @@
                                         <div class="invalid-feedback">{{ $message }}</div><br>
                                     @enderror
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="competencia" class="form-label">Competencia (MM/AAAA)</label>
-                                    <input type="text" class="form-control competencia-mask @error('competencia') is-invalid @enderror"
-                                        id="competencia" name="competencia" value="{{ old('competencia', $lancamento->competencia ?? now()->format('m/Y')) }}" placeholder="05/2026">
-                                    @error('competencia')
+                                <div class="form-group col-md-4">
+                                    <label for="data_vencimento" class="form-label">Data vencimento</label>
+                                    <input type="date" class="form-control @error('data_vencimento') is-invalid @enderror"
+                                        id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', $lancamento->data_vencimento ?? null) }}">
+                                    @error('data_vencimento')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="valor" class="form-label">Valor (R$)</label>
+                                <div class="form-group col-md-4">
+                                    <label for="data_pagamento" class="form-label">Data pagamento</label>
+                                    <input type="date" class="form-control @error('data_pagamento') is-invalid @enderror"
+                                        id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento', $lancamento->data_pagamento ?? null) }}">
+                                    @error('data_pagamento')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="valor" class="form-label">Valor</label>
                                     <div class="input-group">
                                         <span class="input-group-text">R$</span>
                                         <input type="text" class="form-control valor @error('valor') is-invalid @enderror"
@@ -104,108 +114,106 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="data_vencimento" class="form-label">Data de vencimento</label>
-                                    <input type="date" class="form-control @error('data_vencimento') is-invalid @enderror"
-                                        id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', $lancamento->data_vencimento ?? null) }}">
-                                    @error('data_vencimento')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="dia_pagamento" class="form-label">Dia de pagamento</label>
-                                    <input type="number" class="form-control @error('dia_pagamento') is-invalid @enderror"
-                                        id="dia_pagamento" name="dia_pagamento" value="{{ old('dia_pagamento', $lancamento->dia_pagamento ?? null) }}" min="1" max="31" placeholder="Ex: 5">
-                                    @error('dia_pagamento')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
                             </div>
 
+                            <hr>
+
                             <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="valor_deborah" class="form-label">Valor Deborah</label>
-                                    <input type="text" class="form-control valor @error('valor_deborah') is-invalid @enderror"
-                                        id="valor_deborah" name="valor_deborah" value="{{ old('valor_deborah', $lancamento->valor_deborah ?? null) }}" placeholder="0,00">
-                                    @error('valor_deborah')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="valor_wangley" class="form-label">Valor Wangley</label>
-                                    <input type="text" class="form-control valor @error('valor_wangley') is-invalid @enderror"
-                                        id="valor_wangley" name="valor_wangley" value="{{ old('valor_wangley', $lancamento->valor_wangley ?? null) }}" placeholder="0,00">
-                                    @error('valor_wangley')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="form-group col-md-4">
                                     <label for="valor_casal" class="form-label">Valor Casal</label>
-                                    <input type="text" class="form-control valor @error('valor_casal') is-invalid @enderror"
-                                        id="valor_casal" name="valor_casal" value="{{ old('valor_casal', $lancamento->valor_casal ?? null) }}" placeholder="0,00">
-                                    @error('valor_casal')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="text" class="form-control valor @error('valor_casal') is-invalid @enderror"
+                                            id="valor_casal" name="valor_casal" value="{{ old('valor_casal', $lancamento->valor_casal ?? null) }}" placeholder="0,00">
+                                        @error('valor_casal')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group col-md-4">
+                                    <label for="valor_deborah" class="form-label">Valor Déborah</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="text" class="form-control valor @error('valor_deborah') is-invalid @enderror"
+                                            id="valor_deborah" name="valor_deborah" value="{{ old('valor_deborah', $lancamento->valor_deborah ?? null) }}" placeholder="0,00">
+                                        @error('valor_deborah')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="valor_wangley" class="form-label">Valor Wangley</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="text" class="form-control valor @error('valor_wangley') is-invalid @enderror"
+                                            id="valor_wangley" name="valor_wangley" value="{{ old('valor_wangley', $lancamento->valor_wangley ?? null) }}" placeholder="0,00">
+                                        @error('valor_wangley')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="deborah_falta_pagar" class="form-label">Deborah falta pagar</label>
-                                    <input type="text" class="form-control valor @error('deborah_falta_pagar') is-invalid @enderror"
-                                        id="deborah_falta_pagar" name="deborah_falta_pagar" value="{{ old('deborah_falta_pagar', $lancamento->deborah_falta_pagar ?? null) }}" placeholder="0,00">
-                                    @error('deborah_falta_pagar')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                <div class="form-group col-md-4">
+                                    <label for="deborah_falta_pagar" class="form-label">Déborah falta pagar</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="text" class="form-control valor @error('deborah_falta_pagar') is-invalid @enderror"
+                                            id="deborah_falta_pagar" name="deborah_falta_pagar" value="{{ old('deborah_falta_pagar', $lancamento->deborah_falta_pagar ?? null) }}" placeholder="0,00">
+                                        @error('deborah_falta_pagar')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="form-group col-md-4">
                                     <label for="wangley_falta_pagar" class="form-label">Wangley falta pagar</label>
-                                    <input type="text" class="form-control valor @error('wangley_falta_pagar') is-invalid @enderror"
-                                        id="wangley_falta_pagar" name="wangley_falta_pagar" value="{{ old('wangley_falta_pagar', $lancamento->wangley_falta_pagar ?? null) }}" placeholder="0,00">
-                                    @error('wangley_falta_pagar')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="text" class="form-control valor @error('wangley_falta_pagar') is-invalid @enderror"
+                                            id="wangley_falta_pagar" name="wangley_falta_pagar" value="{{ old('wangley_falta_pagar', $lancamento->wangley_falta_pagar ?? null) }}" placeholder="0,00">
+                                        @error('wangley_falta_pagar')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
 
                             <hr>
 
-                            <div class="mb-3">
-                                <label class="form-label">Parcelamento</label>
-                                <div class="form-check form-switch mb-3">
-                                    <input class="form-check-input" type="checkbox" id="is_parcelado" name="is_parcelado" value="1"
-                                        {{ old('is_parcelado', $lancamento->is_parcelado ?? null) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_parcelado">Parcelado?</label>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label class="form-label">Parcelamento</label>
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" id="is_parcelado" name="is_parcelado" value="1"
+                                            {{ old('is_parcelado', $lancamento->is_parcelado ?? null) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_parcelado">Parcelado?</label>
+                                    </div>
                                 </div>
-
-                                <div id="campos-parcelamento" class="{{ old('is_parcelado', $lancamento->is_parcelado ?? null) ? '' : 'd-none' }}">
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <label for="parcela_atual" class="form-label">Parcela atual</label>
-                                            <input type="number" class="form-control @error('parcela_atual') is-invalid @enderror"
-                                                id="parcela_atual" name="parcela_atual" value="{{ old('parcela_atual', $lancamento->parcela_atual ?? 1) }}" min="1">
-                                            @error('parcela_atual')
+                                <div id="campos-parcelamento" class="row {{ old('is_parcelado', $lancamento->is_parcelado ?? null) ? '' : 'd-none' }}">
+                                    <div class="form-group col-md-4">
+                                        <label for="parcela_atual" class="form-label">Parcela atual</label>
+                                        <input type="number" class="form-control @error('parcela_atual') is-invalid @enderror"
+                                            id="parcela_atual" name="parcela_atual" value="{{ old('parcela_atual', $lancamento->parcela_atual ?? 1) }}" min="1">
+                                        @error('parcela_atual')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="total_parcelas" class="form-label">Total de parcelas</label>
+                                        <input type="number" class="form-control @error('total_parcelas') is-invalid @enderror" id="total_parcelas"
+                                            name="total_parcelas" value="{{ old('total_parcelas', $lancamento->total_parcelas ?? null) }}" min="1">
+                                        @error('total_parcelas')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="valor_parcela" class="form-label">Valor por parcela</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">R$</span>
+                                            <input type="text" class="form-control money-mask @error('valor_parcela') is-invalid @enderror" id="valor_parcela"
+                                                name="valor_parcela" value="{{ old('valor_parcela', $lancamento->valor_parcela ?? null) }}" placeholder="0,00">
+                                            @error('valor_parcela')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="total_parcelas" class="form-label">Total de parcelas</label>
-                                            <input type="number" class="form-control @error('total_parcelas') is-invalid @enderror" id="total_parcelas"
-                                                name="total_parcelas" value="{{ old('total_parcelas', $lancamento->total_parcelas ?? null) }}" min="1">
-                                            @error('total_parcelas')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="valor_parcela" class="form-label">Valor por parcela</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text">R$</span>
-                                                <input type="text" class="form-control money-mask @error('valor_parcela') is-invalid @enderror" id="valor_parcela"
-                                                    name="valor_parcela" value="{{ old('valor_parcela', $lancamento->valor_parcela ?? null) }}" placeholder="0,00">
-                                                @error('valor_parcela')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -213,42 +221,48 @@
 
                             <hr>
 
-                            <div class="mb-3">
-                                <label class="form-label">Status e recorrencia</label>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="is_receber" name="is_receber" value="1"
-                                        {{ old('is_receber', $lancamento->is_receber ?? null) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_receber">A receber?</label>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <span>Status e recorrência</span>
                                 </div>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="is_pago" name="is_pago" value="1"
-                                        {{ old('is_pago', $lancamento->is_pago ?? null) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_pago">Ja foi pago?</label>
+                                <div class="form-group col-md-4">
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="is_receber" name="is_receber" value="1"
+                                            {{ old('is_receber', $lancamento->is_receber ?? null) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_receber">A receber?</label>
+                                    </div>
                                 </div>
-                                <div class="mb-2">
-                                    <label for="data_pagamento" class="form-label">Data de pagamento</label>
-                                    <input type="date" class="form-control @error('data_pagamento') is-invalid @enderror"
-                                        id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento', $lancamento->data_pagamento ?? null) }}">
-                                    @error('data_pagamento') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                <div class="form-group col-md-4">
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="is_pago" name="is_pago" value="1"
+                                            {{ old('is_pago', $lancamento->is_pago ?? null) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_pago">Já foi pago?</label>
+                                    </div>
                                 </div>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="is_fixo" name="is_fixo" value="1"
-                                        {{ old('is_fixo', $lancamento->is_fixo ?? null) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_fixo">Lancamento fixo?</label>
+                                <div class="form-group col-md-4">
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="is_fixo" name="is_fixo" value="1"
+                                            {{ old('is_fixo', $lancamento->is_fixo ?? null) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_fixo">Lançamento fixo?</label>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="observacao" class="form-label">Observacao</label>
-                                <textarea class="form-control" id="observacao" name="observacao" rows="2">
-                                    {{ old('observacao', $lancamento->observacao ?? null) }}
-                                </textarea>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="observacao" class="form-label">Observação</label>
+                                    <textarea class="form-control" id="observacao" name="observacao" rows="2">
+                                        {{ old('observacao', $lancamento->observacao ?? null) }}
+                                    </textarea>
+                                </div>
                             </div>
 
-                            <div class="mb-4">
-                                <label for="link_pagamento" class="form-label">Link de pagamento (opcional)</label>
-                                <input type="url" class="form-control" id="link_pagamento" name="link_pagamento"
-                                    value="{{ old('link_pagamento', $lancamento->link_pagamento ?? null) }}" placeholder="https://...">
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="link_pagamento" class="form-label">Link de pagamento (opcional)</label>
+                                    <input type="url" class="form-control" id="link_pagamento" name="link_pagamento"
+                                        value="{{ old('link_pagamento', $lancamento->link_pagamento ?? null) }}" placeholder="https://...">
+                                </div>
                             </div>
 
                             <div class="d-flex gap-2">
@@ -280,7 +294,7 @@
                         <div class="d-flex align-items-start mb-3 p-2 rounded bg-light">
                             <i class="fas fa-hand-holding-usd text-success mt-1 mr-3"></i>
                             <div>
-                                <h6 class="mb-1" style="font-size: 1rem;">Lancamento a receber</h6>
+                                <h6 class="mb-1" style="font-size: 1rem;">Lançamento a receber</h6>
                                 <p class="text-muted mb-0" style="font-size: 0.80rem;">Ative <strong>A receber?</strong> para valores que ainda vão entrar no caixa.</p>
                             </div>
                         </div>
@@ -311,7 +325,6 @@
    <script>
         $('.valor').mask('00.000.000,00', {reverse: true});
         $('.competencia-mask').mask('00/0000');
-        $('.money-mask').mask('00.000.000,00', {reverse: true});
 
         $(document).ready(function() {
             const $parcelado = $('#is_parcelado');
@@ -332,23 +345,6 @@
                 },
                 closeOnSelect: true,
                 width: '100%',
-            });
-
-            $('#datatables-reponsive').dataTable({
-                "oLanguage": {
-                    "sLengthMenu": "Mostrar _MENU_ registros por pÃ¡gina",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
-                    "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
-                    "sInfoFiltered": "(filtrado de _MAX_ registros)",
-                    "sSearch": "Pesquisar: ",
-                    "oPaginate": {
-                        "sFirst": "InÃ­cio",
-                        "sPrevious": "Anterior",
-                        "sNext": "PrÃ³ximo",
-                        "sLast": "Ãšltimo"
-                    }
-                },
             });
         });
     </script>

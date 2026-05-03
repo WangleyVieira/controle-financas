@@ -45,14 +45,14 @@
                                     <td>R$ {{ number_format($lancamento->valor, 2, ',', '.') }}</td>
                                     <td>{{ $lancamento->competencia }}</td>
                                     <td>
-                                        @if ($lancamento->pago)
+                                        @if ($lancamento->is_pago)
                                             <span class="badge badge-success">Sim</span>
                                         @else
                                             <span class="badge badge-danger">Não</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($lancamento->a_receber)
+                                        @if ($lancamento->is_receber)
                                             <span class="badge badge-success">Sim</span>
                                         @else
                                             <span class="badge badge-danger">Não</span>
