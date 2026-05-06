@@ -35,13 +35,13 @@
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="index.html">
-                                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                                <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Dashboard</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="pages-profile.html">
-                                <i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
+                                <i class="align-middle fas fa-user"></i> <span class="align-middle">Perfil</span>
                             </a>
                         </li>
 
@@ -51,31 +51,31 @@
 
                         {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="ui-buttons.html">
-                            <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Entradas</span>
+                            <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Entradas</span>
                             </a>
                         </li> --}}
 
                         <li class="sidebar-item {{ Request::is('lancamentos*') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('lancamento.index') }}">
-                            <i class="align-middle" data-feather="trending-up"></i> <span class="align-middle">Lançamentos</span>
+                            <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Lançamentos</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="#">
-                            <i class="align-middle" data-feather="trending-down"></i> <span class="align-middle">Gastos Anuais</span>
+                            <i class="align-middle fas fa-chart-area"></i> <span class="align-middle">Gastos Anuais</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="ui-forms.html">
-                            <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Parcelamentos</span>
+                            <i class="align-middle fas fa-layer-group"></i> <span class="align-middle">Parcelamentos</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="ui-forms.html">
-                            <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Cartões de Crédito</span>
+                            <i class="align-middle fas fa-credit-card"></i> <span class="align-middle">Cartões de Crédito</span>
                             </a>
                         </li>
 
@@ -85,19 +85,19 @@
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="charts-chartjs.html">
-                            <i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle">Compras Variadas</span>
+                            <i class="align-middle fas fa-shopping-cart"></i> <span class="align-middle">Compras Variadas</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Relatórios</span>
+                            <i class="align-middle fas fa-chart-bar"></i> <span class="align-middle">Relatórios</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle" data-feather="clock"></i> <span class="align-middle">Histórico</span>
+                            <i class="align-middle fas fa-history"></i> <span class="align-middle">Histórico</span>
                             </a>
                         </li>
 
@@ -107,25 +107,25 @@
 
                         <li class="sidebar-item {{ Request::is('configuracao/categoria') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.categoria.index') }}">
-                            <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Categorias</span>
+                            <i class="align-middle fas fa-tags"></i> <span class="align-middle">Categorias</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item {{ Request::is('configuracao/tipo-categoria') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.tipo_categoria.index') }}">
-                            <i class="align-middle" data-feather="target"></i> <span class="align-middle">Tipo de Categoria</span>
+                            <i class="align-middle fas fa-bullseye"></i> <span class="align-middle">Tipo de Categoria</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item {{ Request::is('configuracao/responsavel') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.responsavel.index') }}">
-                            <i class="align-middle" data-feather="target"></i> <span class="align-middle">Responsável</span>
+                            <i class="align-middle fas fa-user-check"></i> <span class="align-middle">Responsável</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item {{ Request::is('configuracao/usuario') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.usuario.index') }}">
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Usuários</span>
+                            <i class="align-middle fas fa-users"></i> <span class="align-middle">Usuários</span>
                             </a>
                         </li>
 
@@ -196,4 +196,7 @@
         @yield('scripts')
     </body>
 </html>
+
+
+
 
