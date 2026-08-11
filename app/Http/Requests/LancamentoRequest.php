@@ -95,7 +95,6 @@ class LancamentoRequest extends FormRequest
             'is_receber' => ['nullable', 'boolean'],
             'is_pago' => ['nullable', 'boolean'],
             'data_pagamento' => ['nullable', 'date', 'required_if:is_pago,1'],
-            'responsavel_id' => ['required', 'integer', 'exists:responsavels,id'],
             'observacao' => ['nullable', 'string'],
             'link_pagamento' => ['nullable', 'url', 'max:2048'],
             'is_parcelado' => ['nullable', 'boolean'],
@@ -140,9 +139,6 @@ class LancamentoRequest extends FormRequest
             'dia_pagamento.between' => 'Dia de pagamento deve estar entre 1 e 31.',
 
             'data_pagamento.required_if' => 'Data de pagamento e obrigatoria quando marcado como pago.',
-
-            'responsavel_id.required' => 'Responsavel e obrigatorio.',
-            'responsavel_id.exists' => 'Responsavel invalido.',
 
             'link_pagamento.url' => 'Link de pagamento invalido.',
         ];

@@ -74,20 +74,6 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label class="form-label">Responsável</label>
-                                    <select name="responsavel_id" id="responsavel_id" class="form-control select2 @error('responsavel_id') is-invalid @enderror">
-                                        <option value="" selected disabled>--Selecione--</option>
-                                        @foreach ($responsaveis as $responsavel)
-                                            <option value="{{ $responsavel->id }}" {{ old('responsavel_id', $lancamento->responsavel_id ?? null) == $responsavel->id ? 'selected' : '' }}>
-                                                {{ $responsavel->nome }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('responsavel_id')
-                                        <div class="invalid-feedback">{{ $message }}</div><br>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-4">
                                     <label for="data_vencimento" class="form-label">Data vencimento</label>
                                     <input type="date" class="form-control @error('data_vencimento') is-invalid @enderror"
                                         id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', $lancamento->data_vencimento ?? null) }}">

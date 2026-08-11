@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LancamentoRequest;
 use App\Models\Categoria;
 use App\Models\Lancamento;
-use App\Models\Responsavel;
 use App\Models\TipoCategoria;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -36,9 +35,7 @@ class LancamentoController extends Controller
         try {
             $categorias = Categoria::get();
             $tipoCategorias = TipoCategoria::get();
-            $responsaveis = Responsavel::get();
-
-            return view('lancamento.form', compact('categorias', 'tipoCategorias', 'responsaveis'));
+            return view('lancamento.form', compact('categorias', 'tipoCategorias'));
 
         }
         catch (\Exception $ex) {
@@ -74,9 +71,7 @@ class LancamentoController extends Controller
             $lancamento = Lancamento::findOrFail($id);
             $categorias = Categoria::get();
             $tipoCategorias = TipoCategoria::get();
-            $responsaveis = Responsavel::get();
-
-            return view('lancamento.form', compact('lancamento', 'categorias', 'tipoCategorias', 'responsaveis'));
+            return view('lancamento.form', compact('lancamento', 'categorias', 'tipoCategorias'));
 
         }
         catch (\Exception $ex) {

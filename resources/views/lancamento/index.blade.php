@@ -26,7 +26,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Descrição</th>
-                                <th>Responsável</th>
                                 <th>Tipo de Categoria</th>
                                 <th>Valor</th>
                                 <th>Competência(referência mensal)</th>
@@ -40,7 +39,6 @@
                                 <tr>
                                     <td>{{ $lancamento->id }}</td>
                                     <td>{{ $lancamento->descricao }}</td>
-                                    <td>{{ $lancamento->responsavel_id != null ? $lancamento->responsavel->nome : '' }}</td>
                                     <td>{{ $lancamento->tipo_categoria_id != null ? $lancamento->tipoCategoria->descricao : '' }}</td>
                                     <td>R$ {{ number_format($lancamento->valor, 2, ',', '.') }}</td>
                                     <td>{{ $lancamento->competencia }}</td>

@@ -15,7 +15,7 @@ class Lancamento extends Model
         'tipo', 'competencia', 'descricao', 'valor','data_vencimento', 'is_receber','is_pago', 'data_pagamento',
         'observacao', 'link_pagamento', 'is_parcelado', 'parcela_atual', 'total_parcelas', 'valor_parcela', 'grupo_parcelamento',
         'is_fixo', 'valor_deborah', 'valor_wangley', 'valor_casal', 'deborah_falta_pagar', 'wangley_falta_pagar', 'tipo_categoria_id',
-        'responsavel_id', 'cadastrado_por_usuario', 'categoria_id'
+        'cadastrado_por_usuario', 'categoria_id'
     ];
 
     public function categoria()
@@ -33,9 +33,5 @@ class Lancamento extends Model
         return $this->belongsTo(User::class, 'cadastrado_por_usuario');
     }
 
-    public function responsavel()
-    {
-        return $this->belongsTo(Responsavel::class, 'responsavel_id');
-    }
 }
 
