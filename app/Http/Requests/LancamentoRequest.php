@@ -19,66 +19,6 @@ class LancamentoRequest extends FormRequest
         $this->merge([
             'valor' => $valor,
         ]);
-
-        $valor_deborah = $this->input('valor_deborah');
-        if (!empty($valor_deborah)) {
-            $valor_deborah = str_replace(['.', ','], ['', '.'], $valor_deborah);
-        }
-        else {
-            $valor_deborah = 0.0;
-        }
-
-        $this->merge([
-            'valor_deborah' => $valor_deborah,
-        ]);
-
-        $valor_wangley = $this->input('valor_wangley');
-        if (!empty($valor_wangley)) {
-            $valor_wangley = str_replace(['.', ','], ['', '.'], $valor_wangley);
-        }
-        else {
-            $valor_wangley = 0.0;
-        }
-
-        $this->merge([
-            'valor_wangley' => $valor_wangley,
-        ]);
-
-        $valor_casal = $this->input('valor_casal');
-        if (!empty($valor_casal)) {
-            $valor_casal = str_replace(['.', ','], ['', '.'], $valor_casal);
-        }
-        else {
-            $valor_casal = 0.0;
-        }
-
-        $this->merge([
-            'valor_casal' => $valor_casal,
-        ]);
-
-        $deborah_falta_pagar = $this->input('deborah_falta_pagar');
-        if (!empty($deborah_falta_pagar)) {
-            $deborah_falta_pagar = str_replace(['.', ','], ['', '.'], $deborah_falta_pagar);
-        }
-        else {
-            $deborah_falta_pagar = 0.0;
-        }
-
-        $this->merge([
-            'deborah_falta_pagar' => $deborah_falta_pagar,
-        ]);
-
-        $wangley_falta_pagar = $this->input('wangley_falta_pagar');
-        if (!empty($wangley_falta_pagar)) {
-            $wangley_falta_pagar = str_replace(['.', ','], ['', '.'], $wangley_falta_pagar);
-        }
-        else {
-            $wangley_falta_pagar = 0.0;
-        }
-
-        $this->merge([
-            'wangley_falta_pagar' => $wangley_falta_pagar,
-        ]);
     }
 
     public function rules(): array
@@ -102,11 +42,6 @@ class LancamentoRequest extends FormRequest
             'total_parcelas' => ['nullable', 'integer', 'min:1'],
             'valor_parcela' => ['nullable', 'numeric'],
             'is_fixo' => ['nullable', 'boolean'],
-            'valor_deborah' => ['nullable', 'numeric'],
-            'valor_wangley' => ['nullable', 'numeric'],
-            'valor_casal' => ['nullable', 'numeric'],
-            'deborah_falta_pagar' => ['nullable', 'numeric'],
-            'wangley_falta_pagar' => ['nullable', 'numeric'],
         ];
     }
 
@@ -116,13 +51,7 @@ class LancamentoRequest extends FormRequest
             'valor.required' => 'Valor e obrigatorio.',
             'valor.decimal' => 'Valor deve ser um numero decimal com 2 casas decimais.',
 
-            'valor_wangley.numeric' => 'Valor do Wangley deve ser um numero.',
-
-            'valor_casal.numeric' => 'Valor do Casal deve ser um numero.',
-
-            'deborah_falta_pagar.numeric' => 'Valor da Deborah falta pagar deve ser um numero.',
-
-            'wangley_falta_pagar.numeric' => 'Valor do Wangley falta pagar deve ser um numero.',
+            'valor.numeric' => 'Valor do Casal deve ser um numero.',
 
             'descricao.required' => 'Descricao e obrigatoria.',
 

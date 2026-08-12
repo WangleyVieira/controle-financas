@@ -106,67 +106,6 @@
 
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label for="valor_casal" class="form-label">Valor Casal</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">R$</span>
-                                        <input type="text" class="form-control valor @error('valor_casal') is-invalid @enderror"
-                                            id="valor_casal" name="valor_casal" value="{{ old('valor_casal', $lancamento->valor_casal ?? null) }}" placeholder="0,00">
-                                        @error('valor_casal')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="valor_deborah" class="form-label">Valor Déborah</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">R$</span>
-                                        <input type="text" class="form-control valor @error('valor_deborah') is-invalid @enderror"
-                                            id="valor_deborah" name="valor_deborah" value="{{ old('valor_deborah', $lancamento->valor_deborah ?? null) }}" placeholder="0,00">
-                                        @error('valor_deborah')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="valor_wangley" class="form-label">Valor Wangley</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">R$</span>
-                                        <input type="text" class="form-control valor @error('valor_wangley') is-invalid @enderror"
-                                            id="valor_wangley" name="valor_wangley" value="{{ old('valor_wangley', $lancamento->valor_wangley ?? null) }}" placeholder="0,00">
-                                        @error('valor_wangley')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="deborah_falta_pagar" class="form-label">Déborah falta pagar</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">R$</span>
-                                        <input type="text" class="form-control valor @error('deborah_falta_pagar') is-invalid @enderror"
-                                            id="deborah_falta_pagar" name="deborah_falta_pagar" value="{{ old('deborah_falta_pagar', $lancamento->deborah_falta_pagar ?? null) }}" placeholder="0,00">
-                                        @error('deborah_falta_pagar')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="wangley_falta_pagar" class="form-label">Wangley falta pagar</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">R$</span>
-                                        <input type="text" class="form-control valor @error('wangley_falta_pagar') is-invalid @enderror"
-                                            id="wangley_falta_pagar" name="wangley_falta_pagar" value="{{ old('wangley_falta_pagar', $lancamento->wangley_falta_pagar ?? null) }}" placeholder="0,00">
-                                        @error('wangley_falta_pagar')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="row">
-                                <div class="form-group col-md-4">
                                     <label class="form-label">Parcelamento</label>
                                     <div class="form-check form-switch mb-3">
                                         <input class="form-check-input" type="checkbox" id="is_parcelado" name="is_parcelado" value="1"

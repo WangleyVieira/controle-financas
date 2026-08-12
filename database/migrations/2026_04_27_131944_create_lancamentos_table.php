@@ -31,12 +31,6 @@ return new class extends Migration
 
             $table->boolean('is_fixo')->default(false);
 
-            $table->decimal('valor_deborah', 12, 2)->nullable();
-            $table->decimal('valor_wangley', 12, 2)->nullable();
-            $table->decimal('valor_casal', 12, 2)->nullable();
-            $table->decimal('deborah_falta_pagar', 12, 2)->nullable();
-            $table->decimal('wangley_falta_pagar', 12, 2)->nullable();
-
             $table->integer('responsavel_id')->unsigned();
             $table->foreign('responsavel_id')->references('id')->on('responsavels');
 
