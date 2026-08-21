@@ -40,20 +40,6 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label class="form-label">Tipo de Categoria</label>
-                                    <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                        <option value="" selected disabled>--Selecione--</option>
-                                        @foreach ($tipoCategorias as $tipoCategoria)
-                                            <option value="{{ $tipoCategoria->id }}" {{ old('tipo_categoria_id', $lancamento->tipo_categoria_id ?? null) == $tipoCategoria->id ? 'selected' : '' }}>
-                                                {{ $tipoCategoria->descricao }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('tipo_categoria_id')
-                                        <div class="invalid-feedback">{{ $message }}</div><br>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-4">
                                     <label for="competencia" class="form-label">Competência (MM/AAAA)</label>
                                     <input type="text" class="form-control competencia-mask @error('competencia') is-invalid @enderror"
                                         id="competencia" name="competencia" value="{{ old('competencia', $lancamento->competencia ?? now()->format('m/Y')) }}" placeholder="05/2026">
@@ -90,12 +76,23 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="valor" class="form-label">Valor</label>
+                                    <label for="valor" class="form-label">Valor previsto</label>
                                     <div class="input-group">
                                         <span class="input-group-text">R$</span>
                                         <input type="text" class="form-control valor @error('valor') is-invalid @enderror"
                                             id="valor" name="valor" value="{{ old('valor', $lancamento->valor ?? null) }}" placeholder="0,00">
                                         @error('valor')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="valor_pago" class="form-label">Valor pago</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="text" class="form-control valor @error('valor_pago') is-invalid @enderror"
+                                            id="valor_pago" name="valor_pago" value="{{ old('valor_pago', $lancamento->valor_pago ?? null) }}" placeholder="0,00">
+                                        @error('valor_pago')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -149,13 +146,6 @@
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <span>Status e recorrência</span>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <div class="form-check form-switch mb-2">
-                                        <input class="form-check-input" type="checkbox" id="is_receber" name="is_receber" value="1"
-                                            {{ old('is_receber', $lancamento->is_receber ?? null) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_receber">A receber?</label>
-                                    </div>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <div class="form-check form-switch mb-2">
@@ -261,6 +251,12 @@
 
             toggleCamposParcelamento();
             $parcelado.on('change', toggleCamposParcelamento);
+
+            $('#is_pago').on('change', function() {
+                if (this.checked && !$('#valor_pago').val()) {
+                    $('#valor_pago').val($('#valor').val());
+                }
+            });
 
             $('.select2').select2({
                 language: {

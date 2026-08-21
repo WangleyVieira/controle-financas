@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LancamentoRequest;
 use App\Models\Categoria;
 use App\Models\Lancamento;
-use App\Models\TipoCategoria;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LancamentoController extends Controller
@@ -13,12 +13,30 @@ class LancamentoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $lancamentos = Lancamento::get();
+            $competencia = $request->input('competencia', now()->format('m/Y'));
+            $situacao = $request->input('situacao');
 
-            return view('lancamento.index', compact('lancamentos'));
+            $consulta = Lancamento::with(['categoria', 'tipoCategoria'])
+                ->where('competencia', $competencia)
+                ->orderBy('data_vencimento');
+
+            $lancamentos = $consulta->get()->filter(function (Lancamento $lancamento) use ($situacao) {
+                return !$situacao || $lancamento->situacao === $situacao;
+            });
+
+            $resumo = [
+                'receitas' => $lancamentos->where('tipo', 'receita')->sum('valor'),
+                'despesas' => $lancamentos->where('tipo', 'despesa')->sum('valor'),
+                'pago' => $lancamentos->sum('valor_pago'),
+                'pendente' => $lancamentos->sum(fn (Lancamento $lancamento) => max(0, (float) $lancamento->valor - (float) ($lancamento->valor_pago ?? 0))),
+            ];
+            $resumo['saldo'] = $resumo['receitas'] - $resumo['despesas'];
+            $competencias = Lancamento::query()->select('competencia')->distinct()->pluck('competencia');
+
+            return view('lancamento.index', compact('lancamentos', 'competencia', 'situacao', 'resumo', 'competencias'));
 
         }
         catch (\Exception $ex) {
@@ -34,8 +52,7 @@ class LancamentoController extends Controller
     {
         try {
             $categorias = Categoria::get();
-            $tipoCategorias = TipoCategoria::get();
-            return view('lancamento.form', compact('categorias', 'tipoCategorias'));
+            return view('lancamento.form', compact('categorias'));
 
         }
         catch (\Exception $ex) {
@@ -50,7 +67,7 @@ class LancamentoController extends Controller
     public function store(LancamentoRequest $request)
     {
         try {
-            Lancamento::create($request->validated());
+            Lancamento::create($this->dadosDoLancamento($request));
 
             Alert::toast('Lancamento cadastrado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
@@ -70,8 +87,7 @@ class LancamentoController extends Controller
         try {
             $lancamento = Lancamento::findOrFail($id);
             $categorias = Categoria::get();
-            $tipoCategorias = TipoCategoria::get();
-            return view('lancamento.form', compact('lancamento', 'categorias', 'tipoCategorias'));
+            return view('lancamento.form', compact('lancamento', 'categorias'));
 
         }
         catch (\Exception $ex) {
@@ -87,7 +103,7 @@ class LancamentoController extends Controller
     {
         try {
             $lancamento = Lancamento::findOrFail($id);
-            $lancamento->update($request->validated());
+            $lancamento->update($this->dadosDoLancamento($request));
 
             Alert::toast('Lancamento atualizado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
@@ -116,5 +132,23 @@ class LancamentoController extends Controller
             Alert::toast('Erro! Contate o administrador do sistema.', 'error');
             return redirect()->back();
         }
+    }
+
+    private function dadosDoLancamento(LancamentoRequest $request): array
+    {
+        $dados = $request->validated();
+        $categoria = Categoria::with('tipoCategoria')->findOrFail($dados['categoria_id']);
+        $descricaoTipo = strtolower($categoria->tipoCategoria->descricao);
+
+        $dados['tipo_categoria_id'] = $categoria->tipo_categoria_id;
+        $dados['tipo'] = match ($descricaoTipo) {
+            'receita' => 'receita',
+            'investimento' => 'investimento',
+            default => 'despesa',
+        };
+        $dados['is_receber'] = $dados['tipo'] === 'receita';
+        $dados['is_pago'] = $dados['valor_pago'] !== null && (float) $dados['valor_pago'] >= (float) $dados['valor'];
+
+        return $dados;
     }
 }
