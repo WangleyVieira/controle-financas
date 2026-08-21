@@ -5,27 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LancamentoRequest;
 use App\Models\Categoria;
 use App\Models\Lancamento;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LancamentoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         try {
             $competencia = $request->input('competencia', now()->format('m/Y'));
             $situacao = $request->input('situacao');
-
-            $consulta = Lancamento::with(['categoria', 'tipoCategoria'])
+            $lancamentos = Lancamento::with(['categoria', 'tipoCategoria'])
                 ->where('competencia', $competencia)
-                ->orderBy('data_vencimento');
-
-            $lancamentos = $consulta->get()->filter(function (Lancamento $lancamento) use ($situacao) {
-                return !$situacao || $lancamento->situacao === $situacao;
-            });
+                ->orderBy('data_vencimento')
+                ->get()
+                ->filter(fn (Lancamento $lancamento) => !$situacao || $lancamento->situacao === $situacao);
 
             $resumo = [
                 'receitas' => $lancamentos->where('tipo', 'receita')->sum('valor'),
@@ -37,99 +32,111 @@ class LancamentoController extends Controller
             $competencias = Lancamento::query()->select('competencia')->distinct()->pluck('competencia');
 
             return view('lancamento.index', compact('lancamentos', 'competencia', 'situacao', 'resumo', 'competencias'));
-
-        }
-        catch (\Exception $ex) {
-            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+        } catch (\Exception $ex) {
+            Alert::toast('Erro ao carregar os lançamentos.', 'error');
             return redirect()->back();
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         try {
             $categorias = Categoria::get();
             return view('lancamento.form', compact('categorias'));
-
-        }
-        catch (\Exception $ex) {
-            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+        } catch (\Exception $ex) {
+            Alert::toast('Erro ao carregar o formulário.', 'error');
             return redirect()->back();
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(LancamentoRequest $request)
     {
         try {
             Lancamento::create($this->dadosDoLancamento($request));
-
-            Alert::toast('Lancamento cadastrado com sucesso!', 'success');
+            Alert::toast('Lançamento cadastrado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
-
-        }
-        catch (\Exception $ex) {
-            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+        } catch (\Exception $ex) {
+            Alert::toast('Erro ao cadastrar o lançamento.', 'error');
             return redirect()->back()->withInput();
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         try {
-            $lancamento = Lancamento::findOrFail($id);
-            $categorias = Categoria::get();
-            return view('lancamento.form', compact('lancamento', 'categorias'));
-
-        }
-        catch (\Exception $ex) {
-            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+            return view('lancamento.form', [
+                'lancamento' => Lancamento::findOrFail($id),
+                'categorias' => Categoria::get(),
+            ]);
+        } catch (\Exception $ex) {
+            Alert::toast('Lançamento não encontrado.', 'error');
             return redirect()->back();
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(LancamentoRequest $request, $id)
     {
         try {
-            $lancamento = Lancamento::findOrFail($id);
-            $lancamento->update($this->dadosDoLancamento($request));
-
-            Alert::toast('Lancamento atualizado com sucesso!', 'success');
+            Lancamento::findOrFail($id)->update($this->dadosDoLancamento($request));
+            Alert::toast('Lançamento atualizado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
-
-        }
-        catch (\Exception $ex) {
-            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+        } catch (\Exception $ex) {
+            Alert::toast('Erro ao atualizar o lançamento.', 'error');
             return redirect()->back()->withInput();
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         try {
-            $lancamento = Lancamento::findOrFail($id);
-            $lancamento->delete();
-
-            Alert::toast('Lancamento excluído com sucesso!', 'success');
+            Lancamento::findOrFail($id)->delete();
+            Alert::toast('Lançamento excluído com sucesso!', 'success');
             return redirect()->route('lancamento.index');
-
+        } catch (\Exception $ex) {
+            Alert::toast('Erro ao excluir o lançamento.', 'error');
+            return redirect()->back();
         }
-        catch (\Exception $ex) {
-            Alert::toast('Erro! Contate o administrador do sistema.', 'error');
+    }
+
+    public function gerarProximaCompetencia($id)
+    {
+        try {
+            $lancamento = Lancamento::findOrFail($id);
+
+            if (!$lancamento->is_fixo) {
+                Alert::toast('Apenas lançamentos fixos podem ser recorrentes.', 'error');
+                return redirect()->back();
+            }
+
+            $proximaCompetencia = Carbon::createFromFormat('m/Y', $lancamento->competencia)->addMonth();
+            $jaExiste = Lancamento::query()
+                ->where('competencia', $proximaCompetencia->format('m/Y'))
+                ->where('descricao', $lancamento->descricao)
+                ->where('categoria_id', $lancamento->categoria_id)
+                ->exists();
+
+            if ($jaExiste) {
+                Alert::toast('Esse lançamento já existe na próxima competência.', 'info');
+                return redirect()->route('lancamento.index', ['competencia' => $proximaCompetencia->format('m/Y')]);
+            }
+
+            $novoLancamento = $lancamento->replicate([
+                'competencia', 'data_vencimento', 'valor_pago', 'is_pago', 'data_pagamento', 'created_at', 'updated_at',
+            ]);
+            $novoLancamento->competencia = $proximaCompetencia->format('m/Y');
+            $novoLancamento->data_vencimento = $proximaCompetencia->copy()->day(min(
+                $lancamento->data_vencimento->day,
+                $proximaCompetencia->daysInMonth
+            ));
+            $novoLancamento->valor_pago = null;
+            $novoLancamento->is_pago = false;
+            $novoLancamento->data_pagamento = null;
+            $novoLancamento->save();
+
+            Alert::toast('Próxima competência gerada com sucesso!', 'success');
+            return redirect()->route('lancamento.index', ['competencia' => $novoLancamento->competencia]);
+        } catch (\Exception $ex) {
+            Alert::toast('Erro ao gerar a próxima competência.', 'error');
             return redirect()->back();
         }
     }

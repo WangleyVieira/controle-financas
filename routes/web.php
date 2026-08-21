@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [LancamentoController::class, 'store'])->name('store');
             Route::put('/update/{id}', [LancamentoController::class, 'update'])->name('update');
             Route::get('/edit/{id}', [LancamentoController::class, 'edit'])->name('edit');
+            Route::post('/{id}/gerar-proxima-competencia', [LancamentoController::class, 'gerarProximaCompetencia'])->name('gerar_proxima_competencia');
             Route::delete('/destroy/{id}', [LancamentoController::class, 'destroy'])->name('destroy');
         });
 

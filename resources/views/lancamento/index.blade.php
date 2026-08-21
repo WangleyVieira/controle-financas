@@ -69,7 +69,15 @@
                                     <td>R$ {{ number_format($lancamento->valor, 2, ',', '.') }}</td>
                                     <td>{{ $lancamento->valor_pago !== null ? 'R$ ' . number_format($lancamento->valor_pago, 2, ',', '.') : '-' }}</td>
                                     <td><span class="badge badge-{{ $classesSituacao[$lancamento->situacao] }}">{{ ucfirst($lancamento->situacao) }}</span></td>
-                                    <td><a class="btn btn-warning btn-sm" href="{{ route('lancamento.edit', $lancamento->id) }}" title="Editar"><i class="fas fa-pen"></i></a></td>
+                                    <td class="text-nowrap">
+                                        <a class="btn btn-warning btn-sm" href="{{ route('lancamento.edit', $lancamento->id) }}" title="Editar"><i class="fas fa-pen"></i></a>
+                                        @if ($lancamento->is_fixo)
+                                            <form class="d-inline" method="POST" action="{{ route('lancamento.gerar_proxima_competencia', $lancamento->id) }}">
+                                                @csrf
+                                                <button class="btn btn-primary btn-sm" type="submit" title="Gerar próxima competência"><i class="fas fa-calendar-plus"></i></button>
+                                            </form>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
