@@ -12,6 +12,7 @@ class CategoriaController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -29,6 +30,8 @@ class CategoriaController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param  \App\Http\Requests\CategoriaRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(CategoriaRequest $request)
     {
@@ -50,6 +53,9 @@ class CategoriaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param  \App\Http\Requests\CategoriaRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function update(CategoriaRequest $request, $id)
     {
@@ -68,6 +74,8 @@ class CategoriaController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {

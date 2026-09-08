@@ -9,28 +9,21 @@ class LancamentoRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'valor' => $this->normalizarValor($this->input('valor')),
-            'valor_pago' => $this->filled('valor_pago') ? $this->normalizarValor($this->input('valor_pago')) : null,
-            'is_pago' => $this->boolean('is_pago'),
-            'is_parcelado' => $this->boolean('is_parcelado'),
-            'is_fixo' => $this->boolean('is_fixo'),
+           'valor' => $this->input('valor') ? str_replace(['.', ','], ['', '.'], $this->input('valor')) : 0,
+           'valor_pago' => $this->input('valor_pago') ? str_replace(['.', ','], ['', '.'], $this->input('valor_pago')) : 0,
+           'is_pago' => $this->boolean('is_pago'),
+           'is_parcelado' => $this->boolean('is_parcelado'),
+           'is_fixo' => $this->boolean('is_fixo'),
         ]);
-    }
-
-    private function normalizarValor(?string $valor): string
-    {
-        $valorNormalizado = empty($valor) ? 0 : str_replace(['.', ','], ['', '.'], $valor);
-
-        return number_format((float) $valorNormalizado, 2, '.', '');
     }
 
     public function rules(): array
     {
         return [
-            'competencia' => ['required', 'regex:/^(0[1-9]|1[0-2])\/\d{4}$/'],
+            'competencia' => ['required'],
             'descricao' => ['required', 'string', 'min:3', 'max:255'],
             'valor' => ['required', 'decimal:2,10'],
-            'valor_pago' => ['nullable', 'numeric', 'min:0', 'lte:valor', 'required_if:is_pago,1'],
+            'valor_pago' => ['nullable', 'numeric', 'min:0'],
             'categoria_id' => ['required', 'integer', 'exists:categorias,id'],
             'data_vencimento' => ['required', 'date'],
             'is_pago' => ['nullable', 'boolean'],

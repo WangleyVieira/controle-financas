@@ -11,6 +11,7 @@ class TipoCategoriaController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -27,6 +28,8 @@ class TipoCategoriaController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param  \App\Http\Requests\TipoCategoriaRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(TipoCategoriaRequest $request)
     {
@@ -46,6 +49,9 @@ class TipoCategoriaController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param  \App\Http\Requests\TipoCategoriaRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function update(TipoCategoriaRequest $request, $id)
     {
@@ -64,6 +70,8 @@ class TipoCategoriaController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {

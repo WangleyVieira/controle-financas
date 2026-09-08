@@ -11,6 +11,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class LancamentoController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
         try {
@@ -38,6 +44,10 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Show the form for creating a new resource.
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         try {
@@ -49,10 +59,15 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Store a newly created resource in storage.
+     * @param  \App\Http\Requests\LancamentoRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(LancamentoRequest $request)
     {
         try {
-            Lancamento::create($this->dadosDoLancamento($request));
+            Lancamento::create($request->validated());
             Alert::toast('Lançamento cadastrado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
         } catch (\Exception $ex) {
@@ -61,6 +76,11 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         try {
@@ -74,6 +94,12 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Update the specified resource in storage.
+     * @param  \App\Http\Requests\LancamentoRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(LancamentoRequest $request, $id)
     {
         try {
@@ -86,6 +112,11 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         try {
@@ -98,6 +129,11 @@ class LancamentoController extends Controller
         }
     }
 
+    /**
+     * Generate the next period for the specified resource.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function gerarProximaCompetencia($id)
     {
         try {
@@ -141,21 +177,4 @@ class LancamentoController extends Controller
         }
     }
 
-    private function dadosDoLancamento(LancamentoRequest $request): array
-    {
-        $dados = $request->validated();
-        $categoria = Categoria::with('tipoCategoria')->findOrFail($dados['categoria_id']);
-        $descricaoTipo = strtolower($categoria->tipoCategoria->descricao);
-
-        $dados['tipo_categoria_id'] = $categoria->tipo_categoria_id;
-        $dados['tipo'] = match ($descricaoTipo) {
-            'receita' => 'receita',
-            'investimento' => 'investimento',
-            default => 'despesa',
-        };
-        $dados['is_receber'] = $dados['tipo'] === 'receita';
-        $dados['is_pago'] = $dados['valor_pago'] !== null && (float) $dados['valor_pago'] >= (float) $dados['valor'];
-
-        return $dados;
-    }
 }

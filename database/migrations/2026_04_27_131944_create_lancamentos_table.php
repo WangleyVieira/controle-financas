@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('descricao', 255);
             $table->decimal('valor', 12, 2);
             $table->decimal('valor_pago', 12, 2)->nullable();
-            $table->date('data_vencimento');
+            $table->date('data_vencimento')->nullable();
             $table->boolean('is_receber')->nullable();
             $table->boolean('is_pago')->nullable();
             $table->date('data_pagamento')->nullable();
