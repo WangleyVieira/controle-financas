@@ -6,6 +6,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class LancamentoRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -17,6 +20,9 @@ class LancamentoRequest extends FormRequest
         ]);
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     */
     public function rules(): array
     {
         return [
@@ -38,6 +44,9 @@ class LancamentoRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     */
     public function messages()
     {
         return [

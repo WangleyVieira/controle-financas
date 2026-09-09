@@ -62,7 +62,7 @@
                                 <div class="form-group col-md-4">
                                     <label for="data_vencimento" class="form-label">Data vencimento</label>
                                     <input type="date" class="form-control @error('data_vencimento') is-invalid @enderror"
-                                        id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', $lancamento->data_vencimento ?? null) }}">
+                                        id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', $lancamento->data_vencimento ? date('Y-m-d', strtotime($lancamento->data_vencimento)) : null) }}">
                                     @error('data_vencimento')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -70,7 +70,7 @@
                                 <div class="form-group col-md-4">
                                     <label for="data_pagamento" class="form-label">Data pagamento</label>
                                     <input type="date" class="form-control @error('data_pagamento') is-invalid @enderror"
-                                        id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento', $lancamento->data_pagamento ?? null) }}">
+                                        id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento', $lancamento->data_pagamento ? date('Y-m-d', strtotime($lancamento->data_pagamento)) : null) }}">
                                     @error('data_pagamento')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -198,14 +198,6 @@
                         <p class="text-muted mb-0" style="font-size: 0.80rem;">Guia rápido para evitar erros e manter seus lançamentos organizados.</p>
                     </div>
                     <div class="card-body pt-3">
-                        <div class="d-flex align-items-start mb-3 p-2 rounded bg-light">
-                            <i class="fas fa-users text-primary mt-1 mr-3"></i>
-                            <div>
-                                <h6 class="mb-1" style="font-size: 1rem;">Rateio do casal</h6>
-                                <p class="text-muted mb-0" style="font-size: 0.80rem;">Preencha <strong>Valor Déborah</strong>, <strong>Valor Wangley</strong> e <strong>Valor Casal</strong> quando a despesa for compartilhada.</p>
-                            </div>
-                        </div>
-
                         <div class="d-flex align-items-start mb-3 p-2 rounded bg-light">
                             <i class="fas fa-hand-holding-usd text-success mt-1 mr-3"></i>
                             <div>

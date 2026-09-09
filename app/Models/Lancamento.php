@@ -48,11 +48,6 @@ class Lancamento extends Model
         return $this->belongsTo(Categoria::class);
     }
 
-    public function tipoCategoria()
-    {
-        return $this->belongsTo(TipoCategoria::class);
-    }
-
     public function usuario()
     {
         return $this->belongsTo(User::class, 'cadastrado_por_usuario');

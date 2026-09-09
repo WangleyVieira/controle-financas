@@ -7,6 +7,7 @@ use App\Models\Categoria;
 use App\Models\Lancamento;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LancamentoController extends Controller
@@ -22,7 +23,7 @@ class LancamentoController extends Controller
         try {
             $competencia = $request->input('competencia', now()->format('m/Y'));
             $situacao = $request->input('situacao');
-            $lancamentos = Lancamento::with(['categoria', 'tipoCategoria'])
+            $lancamentos = Lancamento::with(['categoria'])
                 ->where('competencia', $competencia)
                 ->orderBy('data_vencimento')
                 ->get()
@@ -67,7 +68,9 @@ class LancamentoController extends Controller
     public function store(LancamentoRequest $request)
     {
         try {
-            Lancamento::create($request->validated());
+            Lancamento::create($request->validated() + [
+                'cadastrado_por_usuario' => Auth::user()->id,
+            ]);
             Alert::toast('Lançamento cadastrado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
         } catch (\Exception $ex) {
@@ -103,12 +106,13 @@ class LancamentoController extends Controller
     public function update(LancamentoRequest $request, $id)
     {
         try {
-            Lancamento::findOrFail($id)->update($this->dadosDoLancamento($request));
+            Lancamento::findOrFail($id)->update($request->validated());
             Alert::toast('Lançamento atualizado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
         } catch (\Exception $ex) {
-            Alert::toast('Erro ao atualizar o lançamento.', 'error');
-            return redirect()->back()->withInput();
+            return $ex->getMessage();
+            // Alert::toast('Erro ao atualizar o lançamento.', 'error');
+            // return redirect()->back()->withInput();
         }
     }
 

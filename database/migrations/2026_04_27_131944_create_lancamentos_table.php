@@ -28,18 +28,11 @@ return new class extends Migration
             $table->unsignedInteger('parcela_atual')->nullable();
             $table->unsignedInteger('total_parcelas')->nullable();
             $table->decimal('valor_parcela', 12, 2)->nullable();
-            $table->uuid('grupo_parcelamento')->nullable();
 
             $table->boolean('is_fixo')->default(false);
 
-            $table->integer('responsavel_id')->unsigned();
-            $table->foreign('responsavel_id')->references('id')->on('responsavels');
-
             $table->integer('categoria_id')->unsigned();
             $table->foreign('categoria_id')->references('id')->on('categorias');
-
-            $table->integer('tipo_categoria_id')->unsigned();
-            $table->foreign('tipo_categoria_id')->references('id')->on('tipo_categorias');
 
             $table->uuid('cadastrado_por_usuario')->nullable();
             $table->foreign('cadastrado_por_usuario')->references('id')->on('users');

@@ -18,9 +18,8 @@ class CategoriaController extends Controller
     {
         try {
             $categorias = Categoria::get();
-            $tipoCategorias = TipoCategoria::get();
 
-            return view('config.categoria.index', compact('categorias', 'tipoCategorias'));
+            return view('config.categoria.index', compact('categorias'));
         }
         catch (\Exception $ex) {
             Alert::toast('Erro! Contate o administrador do sistema.','error');
