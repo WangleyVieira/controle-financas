@@ -110,9 +110,8 @@ class LancamentoController extends Controller
             Alert::toast('Lançamento atualizado com sucesso!', 'success');
             return redirect()->route('lancamento.index');
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // Alert::toast('Erro ao atualizar o lançamento.', 'error');
-            // return redirect()->back()->withInput();
+            Alert::toast('Erro ao atualizar o lançamento.', 'error');
+            return redirect()->back()->withInput();
         }
     }
 

@@ -34,18 +34,18 @@ class LoginController extends Controller
         // 2) Bloqueia temporariamente após muitas tentativas falhas.
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
-            Alert::toast("Muitas tentativas. Tente novamente em {$seconds}s.", 'warning');
-
-            return back()->withInput($request->only('email', 'remember'));
+            return back()
+                ->withInput($request->only('email', 'remember'))
+                ->withErrors(['email' => "Muitas tentativas. Tente novamente em {$seconds}s."]);
         }
 
         // 3) Tenta autenticar com opção "lembrar-me" do formulário.
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             // Registra falha para aplicar throttling progressivo.
             RateLimiter::hit($throttleKey, 60);
-            Alert::toast('E-mail ou senha invalidos.', 'error');
-
-            return back()->withInput($request->only('email', 'remember'));
+            return back()
+                ->withInput($request->only('email', 'remember'))
+                ->withErrors(['email' => 'E-mail ou senha inválidos.']);
         }
 
         // 4) Login ok: limpa contador de falhas e regenera sessão por segurança.

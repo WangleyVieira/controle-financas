@@ -62,7 +62,7 @@
                                 <div class="form-group col-md-4">
                                     <label for="data_vencimento" class="form-label">Data vencimento</label>
                                     <input type="date" class="form-control @error('data_vencimento') is-invalid @enderror"
-                                        id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', $lancamento->data_vencimento ? date('Y-m-d', strtotime($lancamento->data_vencimento)) : null) }}">
+                                        id="data_vencimento" name="data_vencimento" value="{{ old('data_vencimento', ($lancamento ?? null)?->data_vencimento?->format('Y-m-d')) }}">
                                     @error('data_vencimento')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -70,7 +70,7 @@
                                 <div class="form-group col-md-4">
                                     <label for="data_pagamento" class="form-label">Data pagamento</label>
                                     <input type="date" class="form-control @error('data_pagamento') is-invalid @enderror"
-                                        id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento', $lancamento->data_pagamento ? date('Y-m-d', strtotime($lancamento->data_pagamento)) : null) }}">
+                                        id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento', ($lancamento ?? null)?->data_pagamento?->format('Y-m-d')) }}">
                                     @error('data_pagamento')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

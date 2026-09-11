@@ -54,23 +54,33 @@
                     <table class="table table-bordered table-hover mb-0">
                         <thead style="background-color:#e2e7e6">
                             <tr>
-                                <th>Venc.</th><th>Pago em</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Previsto</th><th>Pago</th><th>Situação</th><th>Ações</th>
+                                <th>Venc.</th>
+                                <th>Pago em</th>
+                                <th>Descrição</th>
+                                <th>Categoria</th>
+                                <th>Previsto</th>
+                                <th>Pago</th>
+                                <th>Situação</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($lancamentos as $lancamento)
                                 @php($classesSituacao = ['pago' => 'success', 'parcial' => 'warning', 'pendente' => 'secondary', 'vencido' => 'danger'])
                                 <tr>
-                                    <td>{{ $lancamento->data_vencimento->format('d/m') }}</td>
+                                    <td>{{ $lancamento->data_vencimento?->format('d/m/Y') ?? '-' }}</td>
                                     <td>{{ $lancamento->data_pagamento?->format('d/m/Y') ?? '-' }}</td>
                                     <td>{{ $lancamento->descricao }}</td>
                                     <td>{{ $lancamento->categoria?->descricao }}</td>
-                                    <td>{{ ucfirst($lancamento->tipo) }}</td>
                                     <td>R$ {{ number_format($lancamento->valor, 2, ',', '.') }}</td>
                                     <td>{{ $lancamento->valor_pago !== null ? 'R$ ' . number_format($lancamento->valor_pago, 2, ',', '.') : '-' }}</td>
                                     <td><span class="badge badge-{{ $classesSituacao[$lancamento->situacao] }}">{{ ucfirst($lancamento->situacao) }}</span></td>
                                     <td class="text-nowrap">
-                                        <a class="btn btn-warning btn-sm" href="{{ route('lancamento.edit', $lancamento->id) }}" title="Editar"><i class="fas fa-pen"></i></a>
+                                        <a class="btn btn-warning btn-sm" href="{{ route('lancamento.edit', $lancamento->id) }}" title="Editar">
+                                            <i class="fas fa-pen"></i></a>
+                                            <button type="button" class="btn btn-danger m-1" data-toggle="modal"
+                                                data-target="#modalExcluir{{ $lancamento->id }}"><i class="fas fa-trash"></i>
+                                            </button>
                                         @if ($lancamento->is_fixo)
                                             <form class="d-inline" method="POST" action="{{ route('lancamento.gerar_proxima_competencia', $lancamento->id) }}">
                                                 @csrf
@@ -79,6 +89,32 @@
                                         @endif
                                     </td>
                                 </tr>
+
+                                 <div class="modal fade" id="modalExcluir{{ $lancamento->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelExcluir" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form method="POST" class="form_prevent_multiple_submits"
+                                                action="{{ route('lancamento.destroy', $lancamento->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="modal-header btn-danger">
+                                                    <h5 class="modal-title text-center" id="exampleModalLabelExcluir">
+                                                        <strong>Excluir Lançamento</strong>
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Deseja excluir o lançamento: <strong>{{ $lancamento->descricao }}</strong>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Cancelar
+                                                    </button>
+                                                    <button type="submit"class="button_submit btn btn-danger">Excluir</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
                     </table>

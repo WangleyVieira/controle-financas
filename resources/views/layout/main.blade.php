@@ -111,12 +111,6 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ Request::is('configuracao/tipo-categoria') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('configuracao.tipo_categoria.index') }}">
-                            <i class="align-middle fas fa-bullseye"></i> <span class="align-middle">Tipo de Categoria</span>
-                            </a>
-                        </li>
-
                         <li class="sidebar-item {{ Request::is('configuracao/usuario') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.usuario.index') }}">
                             <i class="align-middle fas fa-users"></i> <span class="align-middle">Usuários</span>
@@ -136,14 +130,14 @@
                     <div class="navbar-collapse collapse">
                         <ul class="navbar-nav navbar-align">
                             <li class="nav-item dropdown">
-                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
                                     <i class="align-middle" data-feather="settings"></i>
                                 </a>
 
-                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
                                     <span class="text-dark">{{ Auth::user()->name }} - {{ Auth::user()->email }}</span>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end">
+                                <div class="dropdown-menu dropdown-menu-right">
 
                                     {{-- <a class="dropdown-item" href="#">Log out</a> --}}
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -190,7 +184,6 @@
         @yield('scripts')
     </body>
 </html>
-
 
 
 

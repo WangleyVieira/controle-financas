@@ -76,7 +76,7 @@
                     <p>Entre com suas credenciais para acessar o sistema.</p>
                 </div>
 
-                @if(session('error') || isset($errors) && $errors->any())
+                @if(session('error') || $errors->any())
                     <div class="alert-box">
                         {{ session('error') ?? $errors->first() }}
                     </div>

@@ -77,11 +77,18 @@ body {
 }
 
 .navbar.navbar-bg {
+  position: relative !important;
+  z-index: 1030 !important;
   background: rgba(255,255,255,.86) !important;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line) !important;
   box-shadow: 0 4px 20px rgba(2,6,23,.06) !important;
+}
+
+.navbar .dropdown-menu {
+  position: absolute !important;
+  z-index: 1050 !important;
 }
 
 .card {
