@@ -19,11 +19,10 @@
                 <div class="form-group col-md-4 mb-2">
                     <label for="competencia">Competência</label>
                     <select class="form-control" id="competencia" name="competencia">
-                        @forelse ($competencias as $opcao)
+                        <option value="" disabled selected>Selecione</option>
+                        @foreach ($competencias as $opcao)
                             <option value="{{ $opcao }}" {{ $competencia === $opcao ? 'selected' : '' }}>{{ $opcao }}</option>
-                        @empty
-                            <option value="{{ $competencia }}">{{ $competencia }}</option>
-                        @endforelse
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-3 mb-2">
@@ -90,7 +89,7 @@
                                     </td>
                                 </tr>
 
-                                 <div class="modal fade" id="modalExcluir{{ $lancamento->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelExcluir" aria-hidden="true">
+                                <div class="modal fade" id="modalExcluir{{ $lancamento->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelExcluir" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <form method="POST" class="form_prevent_multiple_submits"

@@ -43,9 +43,11 @@ class LoginController extends Controller
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             // Registra falha para aplicar throttling progressivo.
             RateLimiter::hit($throttleKey, 60);
-            return back()
-                ->withInput($request->only('email', 'remember'))
-                ->withErrors(['email' => 'E-mail ou senha inválidos.']);
+            // return back()
+            //     ->withInput($request->only('email', 'remember'))
+            //     ->withErrors(['email' => 'E-mail ou senha inválidos.']);
+            Alert::toast('E-mail ou senha inválidos.','error');
+            return redirect()->back();
         }
 
         // 4) Login ok: limpa contador de falhas e regenera sessão por segurança.
@@ -55,7 +57,7 @@ class LoginController extends Controller
         Alert::toast('Login realizado com sucesso.', 'success');
 
         // Redireciona para página pretendida (ou dashboard, se não houver).
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('lancamento.index'));
     }
 
     public function logout(Request $request)

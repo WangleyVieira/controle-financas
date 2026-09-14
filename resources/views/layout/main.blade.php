@@ -61,11 +61,11 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="#">
                             <i class="align-middle fas fa-chart-area"></i> <span class="align-middle">Gastos Anuais</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="ui-forms.html">
@@ -73,21 +73,15 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="ui-forms.html">
-                            <i class="align-middle fas fa-credit-card"></i> <span class="align-middle">Cartões de Crédito</span>
-                            </a>
-                        </li>
-
                         <li class="sidebar-header">
                             Controle
                         </li>
 
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="charts-chartjs.html">
                             <i class="align-middle fas fa-shopping-cart"></i> <span class="align-middle">Compras Variadas</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
@@ -184,6 +178,3 @@
         @yield('scripts')
     </body>
 </html>
-
-
-

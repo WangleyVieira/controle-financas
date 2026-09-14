@@ -15,9 +15,6 @@ return new class extends Migration
             $table->increments('id');
             $table->string('descricao');
 
-            $table->integer('tipo_categoria_id')->unsigned();
-            $table->foreign('tipo_categoria_id')->references('id')->on('tipo_categorias');
-
             $table->uuid('cadastrado_por_usuario')->nullable();
             $table->foreign('cadastrado_por_usuario')->references('id')->on('users');
 

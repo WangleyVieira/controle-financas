@@ -21,10 +21,12 @@ class LancamentoController extends Controller
     public function index(Request $request)
     {
         try {
-            $competencia = $request->input('competencia', now()->format('m/Y'));
+            $competencias = Lancamento::query()->select('competencia')->distinct()->pluck('competencia');
+            $competencia = $request->input('competencia');
+
             $situacao = $request->input('situacao');
             $lancamentos = Lancamento::with(['categoria'])
-                ->where('competencia', $competencia)
+                ->when($competencia, fn ($query) => $query->where('competencia', $competencia))
                 ->orderBy('data_vencimento')
                 ->get()
                 ->filter(fn (Lancamento $lancamento) => !$situacao || $lancamento->situacao === $situacao);
@@ -36,8 +38,6 @@ class LancamentoController extends Controller
                 'pendente' => $lancamentos->sum(fn (Lancamento $lancamento) => max(0, (float) $lancamento->valor - (float) ($lancamento->valor_pago ?? 0))),
             ];
             $resumo['saldo'] = $resumo['receitas'] - $resumo['despesas'];
-            $competencias = Lancamento::query()->select('competencia')->distinct()->pluck('competencia');
-
             return view('lancamento.index', compact('lancamentos', 'competencia', 'situacao', 'resumo', 'competencias'));
         } catch (\Exception $ex) {
             Alert::toast('Erro ao carregar os lançamentos.', 'error');

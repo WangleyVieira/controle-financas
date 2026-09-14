@@ -69,6 +69,7 @@
             </div>
 
             <!-- ══ RIGHT: FORM PANEL ══ -->
+            @include('sweetalert::alert')
             <div class="form-panel">
                 <div class="form-header">
                     <span class="badge-top">🔐 Acesso seguro</span>

@@ -13,8 +13,8 @@ class Lancamento extends Model
 
     protected $fillable = [
         'tipo', 'competencia', 'descricao', 'valor', 'valor_pago', 'data_vencimento', 'is_receber', 'is_pago', 'data_pagamento',
-        'observacao', 'link_pagamento', 'is_parcelado', 'parcela_atual', 'total_parcelas', 'valor_parcela', 'grupo_parcelamento',
-        'is_fixo', 'tipo_categoria_id', 'cadastrado_por_usuario', 'categoria_id'
+        'observacao', 'link_pagamento', 'is_parcelado', 'parcela_atual', 'total_parcelas', 'valor_parcela', 'is_fixo', 'cadastrado_por_usuario',
+        'categoria_id'
     ];
 
     protected function casts(): array
