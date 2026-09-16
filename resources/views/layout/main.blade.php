@@ -39,8 +39,8 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="pages-profile.html">
+                        <li class="sidebar-item {{ Request::is('perfil*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('perfil.edit') }}">
                                 <i class="align-middle fas fa-user"></i> <span class="align-middle">Perfil</span>
                             </a>
                         </li>

@@ -77,7 +77,7 @@
                                     <td class="text-nowrap">
                                         <a class="btn btn-warning btn-sm" href="{{ route('lancamento.edit', $lancamento->id) }}" title="Editar">
                                             <i class="fas fa-pen"></i></a>
-                                            <button type="button" class="btn btn-danger m-1" data-toggle="modal"
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#modalExcluir{{ $lancamento->id }}"><i class="fas fa-trash"></i>
                                             </button>
                                         @if ($lancamento->is_fixo)

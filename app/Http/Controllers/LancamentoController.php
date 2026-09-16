@@ -54,6 +54,7 @@ class LancamentoController extends Controller
         try {
             $categorias = Categoria::get();
             return view('lancamento.form', compact('categorias'));
+
         } catch (\Exception $ex) {
             Alert::toast('Erro ao carregar o formulário.', 'error');
             return redirect()->back();
