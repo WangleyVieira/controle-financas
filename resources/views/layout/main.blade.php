@@ -49,11 +49,11 @@
                             Finanças
                         </li>
 
-                        {{-- <li class="sidebar-item">
-                            <a class="sidebar-link" href="ui-buttons.html">
-                            <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Entradas</span>
+                        <li class="sidebar-item {{ Request::is('entrada_salario*') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('entrada_salario.index') }}">
+                            <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Entrada de Salário</span>
                             </a>
-                        </li> --}}
+                        </li>
 
                         <li class="sidebar-item {{ Request::is('lancamentos*') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('lancamento.index') }}">

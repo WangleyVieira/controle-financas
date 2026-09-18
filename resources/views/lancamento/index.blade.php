@@ -47,7 +47,9 @@
             </div>
 
             @if ($lancamentos->isEmpty())
-                <div class="alert alert-info text-center mb-0">Não há lançamentos para esta competência.</div>
+                <div>
+                    <h1 class="alert-info px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Não há cadastros no sistema.</h1>
+                </div>
             @else
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover mb-0">
