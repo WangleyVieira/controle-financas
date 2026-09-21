@@ -61,12 +61,6 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="ui-forms.html">
-                                <i class="align-middle fas fa-layer-group"></i> <span class="align-middle">Parcelamentos</span>
-                            </a>
-                        </li>
-
                         <li class="sidebar-header">
                             Controle
                         </li>
