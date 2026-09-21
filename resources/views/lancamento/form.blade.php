@@ -15,7 +15,7 @@
             <div class="col-12 col-xl-8">
                 <div class="card">
                      <div class="card-header">
-                        <h4>{{ $titulo }}</h4><hr>
+                        <h4>{{ $titulo }}</h4>
                     </div>
                     <div class="card-body">
                         <form action="{{ $action }}" method="POST" id="form-lancamento">

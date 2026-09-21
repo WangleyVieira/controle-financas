@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LancamentoRequest;
 use App\Models\Categoria;
+use App\Models\EntradaSalario;
 use App\Models\Lancamento;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,11 +32,13 @@ class LancamentoController extends Controller
                 ->get()
                 ->filter(fn (Lancamento $lancamento) => !$situacao || $lancamento->situacao === $situacao);
 
+            $competenciaAtual = $competencia ?: now()->format('m/Y');
             $resumo = [
                 'receitas' => $lancamentos->where('tipo', 'receita')->sum('valor'),
                 'despesas' => $lancamentos->where('tipo', 'despesa')->sum('valor'),
                 'pago' => $lancamentos->sum('valor_pago'),
                 'pendente' => $lancamentos->sum(fn (Lancamento $lancamento) => max(0, (float) $lancamento->valor - (float) ($lancamento->valor_pago ?? 0))),
+                'saldo_entrada_salario' => EntradaSalario::query()->where('competencia', $competenciaAtual)->sum('valor_salario'),
             ];
             $resumo['saldo'] = $resumo['receitas'] - $resumo['despesas'];
             return view('lancamento.index', compact('lancamentos', 'competencia', 'situacao', 'resumo', 'competencias'));

@@ -30,11 +30,11 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => '/entrada-salario', 'as' => 'entrada_salario.'], function() {
         Route::get('/', [EntradaSalarioController::class, 'index'])->name('index');
-        // Route::get('/create', [EntradaSalarioController::class, 'create'])->name('create');
-        // Route::post('/store', [EntradaSalarioController::class, 'store'])->name('store');
-        // Route::put('/update/{id}', [EntradaSalarioController::class, 'update'])->name('update');
-        // Route::get('/edit/{id}', [EntradaSalarioController::class, 'edit'])->name('edit');
-        // Route::delete('/destroy/{id}', [EntradaSalarioController::class, 'destroy'])->name('destroy');
+        Route::get('/create', [EntradaSalarioController::class, 'create'])->name('create');
+        Route::post('/store', [EntradaSalarioController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [EntradaSalarioController::class, 'update'])->name('update');
+        Route::get('/edit/{id}', [EntradaSalarioController::class, 'edit'])->name('edit');
+        Route::delete('/destroy/{id}', [EntradaSalarioController::class, 'destroy'])->name('destroy');
     });
 
     Route::group(['prefix' => '/configuracao', 'as' => 'configuracao.'], function() {

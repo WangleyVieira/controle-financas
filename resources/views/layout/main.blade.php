@@ -49,27 +49,21 @@
                             Finanças
                         </li>
 
-                        <li class="sidebar-item {{ Request::is('entrada_salario*') ? 'active' : '' }}">
+                        <li class="sidebar-item {{ Request::is('entrada-salario*') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('entrada_salario.index') }}">
-                            <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Entrada de Salário</span>
+                                <i class="align-middle fas fa-chart-area"></i> <span class="align-middle">Entrada de Salário</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item {{ Request::is('lancamentos*') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('lancamento.index') }}">
-                            <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Lançamentos</span>
+                                <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Lançamentos</span>
                             </a>
                         </li>
 
-                        {{-- <li class="sidebar-item">
-                            <a class="sidebar-link" href="#">
-                            <i class="align-middle fas fa-chart-area"></i> <span class="align-middle">Gastos Anuais</span>
-                            </a>
-                        </li> --}}
-
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="ui-forms.html">
-                            <i class="align-middle fas fa-layer-group"></i> <span class="align-middle">Parcelamentos</span>
+                                <i class="align-middle fas fa-layer-group"></i> <span class="align-middle">Parcelamentos</span>
                             </a>
                         </li>
 
@@ -77,21 +71,15 @@
                             Controle
                         </li>
 
-                        {{-- <li class="sidebar-item">
-                            <a class="sidebar-link" href="charts-chartjs.html">
-                            <i class="align-middle fas fa-shopping-cart"></i> <span class="align-middle">Compras Variadas</span>
-                            </a>
-                        </li> --}}
-
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle fas fa-chart-bar"></i> <span class="align-middle">Relatórios</span>
+                                <i class="align-middle fas fa-chart-bar"></i> <span class="align-middle">Relatórios</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
-                            <i class="align-middle fas fa-history"></i> <span class="align-middle">Histórico</span>
+                                <i class="align-middle fas fa-history"></i> <span class="align-middle">Histórico</span>
                             </a>
                         </li>
 
@@ -101,13 +89,13 @@
 
                         <li class="sidebar-item {{ Request::is('configuracao/categoria') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.categoria.index') }}">
-                            <i class="align-middle fas fa-tags"></i> <span class="align-middle">Categorias</span>
+                                <i class="align-middle fas fa-tags"></i> <span class="align-middle">Categorias</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item {{ Request::is('configuracao/usuario') ? 'active' : '' }}">
                             <a class="sidebar-link" href="{{ route('configuracao.usuario.index') }}">
-                            <i class="align-middle fas fa-users"></i> <span class="align-middle">Usuários</span>
+                                <i class="align-middle fas fa-users"></i> <span class="align-middle">Usuários</span>
                             </a>
                         </li>
 

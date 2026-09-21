@@ -15,35 +15,59 @@
         </div>
 
         <div class="card-body">
-            <form method="GET" class="row align-items-end mb-4">
-                <div class="form-group col-md-4 mb-2">
-                    <label for="competencia">Competência</label>
-                    <select class="form-control" id="competencia" name="competencia">
-                        <option value="" disabled selected>Selecione</option>
-                        @foreach ($competencias as $opcao)
-                            <option value="{{ $opcao }}" {{ $competencia === $opcao ? 'selected' : '' }}>{{ $opcao }}</option>
-                        @endforeach
-                    </select>
+            <div class="row mb-4" style="margin-right: -10px; margin-left: -10px;">
+                <div class="col-md-3 px-2 mb-2">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                        <div class="card-body py-3 d-flex flex-column justify-content-center">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <small class="text-muted mb-0">Despesas da competência</small>
+                                <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="background: rgba(239,68,68,0.12); color: #ef4444; width: 28px; height: 28px; font-size: 12px;">
+                                    <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <h5 class="mb-0 text-danger font-weight-bold">R$ {{ number_format($resumo['despesas'], 2, ',', '.') }}</h5>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-3 mb-2">
-                    <label for="situacao">Situação</label>
-                    <select class="form-control" id="situacao" name="situacao">
-                        <option value="">Todas</option>
-                        @foreach (['pendente' => 'Pendente', 'parcial' => 'Parcial', 'pago' => 'Pago', 'vencido' => 'Vencido'] as $valor => $rotulo)
-                            <option value="{{ $valor }}" {{ $situacao === $valor ? 'selected' : '' }}>{{ $rotulo }}</option>
-                        @endforeach
-                    </select>
+                <div class="col-md-3 px-2 mb-2">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                        <div class="card-body py-3 d-flex flex-column justify-content-center">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <small class="text-muted mb-0">Pendente da competência</small>
+                                <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="background: rgba(245,158,11,0.12); color: #f59e0b; width: 28px; height: 28px; font-size: 12px;">
+                                    <i class="fas fa-clock" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <h5 class="mb-0 text-warning font-weight-bold">R$ {{ number_format($resumo['pendente'], 2, ',', '.') }}</h5>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2 mb-2">
-                    <button class="btn btn-primary" type="submit"><i class="fas fa-filter"></i> Filtrar</button>
+                <div class="col-md-3 px-2 mb-2">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                        <div class="card-body py-3 d-flex flex-column justify-content-center">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <small class="text-muted mb-0">Saldo da competência</small>
+                                <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="background: rgba(59,130,246,0.12); color: #3b82f6; width: 28px; height: 28px; font-size: 12px;">
+                                    <i class="fas fa-wallet" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <h5 class="mb-0 {{ $resumo['saldo'] < 0 ? 'text-danger' : 'text-success' }} font-weight-bold">R$ {{ number_format($resumo['saldo'], 2, ',', '.') }}</h5>
+                        </div>
+                    </div>
                 </div>
-            </form>
-
-            <div class="row mb-4">
-                <div class="col-md-3 mb-2"><div class="card bg-light h-100"><div class="card-body py-3"><small>Receitas previstas</small><h5 class="mb-0 text-success">R$ {{ number_format($resumo['receitas'], 2, ',', '.') }}</h5></div></div></div>
-                <div class="col-md-3 mb-2"><div class="card bg-light h-100"><div class="card-body py-3"><small>Despesas previstas</small><h5 class="mb-0 text-danger">R$ {{ number_format($resumo['despesas'], 2, ',', '.') }}</h5></div></div></div>
-                <div class="col-md-3 mb-2"><div class="card bg-light h-100"><div class="card-body py-3"><small>Ainda pendente</small><h5 class="mb-0 text-warning">R$ {{ number_format($resumo['pendente'], 2, ',', '.') }}</h5></div></div></div>
-                <div class="col-md-3 mb-2"><div class="card bg-light h-100"><div class="card-body py-3"><small>Saldo previsto</small><h5 class="mb-0 {{ $resumo['saldo'] < 0 ? 'text-danger' : 'text-success' }}">R$ {{ number_format($resumo['saldo'], 2, ',', '.') }}</h5></div></div></div>
+                <div class="col-md-3 px-2 mb-2">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                        <div class="card-body py-3 d-flex flex-column justify-content-center">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <small class="text-muted mb-0">Salário da competência</small>
+                                <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="background: rgba(139,92,246,0.12); color: #8b5cf6; width: 28px; height: 28px; font-size: 12px;">
+                                    <i class="fas fa-money-bill-wave" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <h5 class="mb-0 text-primary font-weight-bold">R$ {{ number_format((float) $resumo['saldo_entrada_salario'], 2, ',', '.') }}</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             @if ($lancamentos->isEmpty())
