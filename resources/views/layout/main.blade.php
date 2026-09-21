@@ -65,11 +65,11 @@
                             Controle
                         </li>
 
-                        <li class="sidebar-item">
+                        {{-- <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
                                 <i class="align-middle fas fa-chart-bar"></i> <span class="align-middle">Relatórios</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="maps-google.html">
