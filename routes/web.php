@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EntradaSalarioController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\LancamentoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UserController;
@@ -15,6 +16,7 @@ Route::post('/autenticacao', [LoginController::class, 'autenticacao'])->name('lo
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
     Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
     Route::put('/perfil/{id}', [PerfilController::class, 'update'])->name('perfil.update');
 

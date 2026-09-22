@@ -20,7 +20,7 @@
                         </div>
                         <h4 class="mb-1">{{ $user->name }}</h4>
                         <p class="text-muted mb-0">{{ $user->email }}</p>
-                        <small class="text-muted mt-3">Conta criada em {{ optional($user->created_at)->format('d/m/Y') }}</small>
+                        {{-- <small class="text-muted mt-3">Conta criada em {{ optional($user->created_at)->format('d/m/Y') }}</small> --}}
                     </div>
                 </div>
             </div>

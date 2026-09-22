@@ -71,9 +71,9 @@
                             </a>
                         </li> --}}
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="maps-google.html">
-                                <i class="align-middle fas fa-history"></i> <span class="align-middle">Histórico</span>
+                        <li class="sidebar-item {{ Request::is('auditoria*') ? 'active' : '' }}">
+                                <a class="sidebar-link" href="{{ route('auditoria.index') }}">
+                                <i class="align-middle fas fa-clipboard-check"></i> <span class="align-middle">Auditoria</span>
                             </a>
                         </li>
 

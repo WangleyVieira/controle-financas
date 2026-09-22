@@ -1,6 +1,6 @@
 # Controle de Finanças
 
-Aplicação web em Laravel para registrar e acompanhar as finanças do casal. O sistema centraliza lançamentos, vencimentos, pagamentos e histórico por competência, sem separar as despesas por responsável.
+Aplicação web em Laravel para registrar e acompanhar as finanças do casal. O sistema centraliza lançamentos, vencimentos, pagamentos e auditoria por competência, sem separar as despesas por responsável.
 
 ## Funcionalidades
 
@@ -70,6 +70,5 @@ O comando `php artisan migrate --seed` cria as tabelas e o usuário inicial defi
 2. Cadastre as categorias em **Configurações > Categorias**.
 3. Acesse **Lançamentos** e informe a competência no formato utilizado pelo projeto, a descrição, a categoria, o vencimento e o valor previsto.
 4. Ao pagar, registre o valor pago, a data de pagamento e marque o lançamento como pago.
-5. Na listagem, deixe o filtro vazio para consultar todo o histórico ou selecione uma competência para restringir os resultados.
-
+5. Na listagem, deixe o filtro vazio para consultar toda a auditoria ou selecione uma competência para restringir os resultados.
 

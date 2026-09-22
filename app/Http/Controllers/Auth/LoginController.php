@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use App\Models\Audit;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
@@ -41,6 +42,14 @@ class LoginController extends Controller
 
         // 3) Tenta autenticar com opção "lembrar-me" do formulário.
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
+            Audit::create([
+                'action' => 'login_failed',
+                'auditable_type' => 'auth',
+                'new_values' => ['email' => $credentials['email']],
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'url' => $request->fullUrl(),
+            ]);
             // Registra falha para aplicar throttling progressivo.
             RateLimiter::hit($throttleKey, 60);
             // return back()
@@ -54,6 +63,16 @@ class LoginController extends Controller
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
 
+        Audit::create([
+            'user_id' => Auth::id(),
+            'action' => 'login',
+            'auditable_type' => 'auth',
+            'new_values' => ['email' => Auth::user()->email],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'url' => $request->fullUrl(),
+        ]);
+
         Alert::toast('Login realizado com sucesso.', 'success');
 
         // Redireciona para página pretendida (ou dashboard, se não houver).
@@ -62,6 +81,17 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $user = Auth::user();
+        Audit::create([
+            'user_id' => $user?->id,
+            'action' => 'logout',
+            'auditable_type' => 'auth',
+            'new_values' => ['email' => $user?->email],
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'url' => $request->fullUrl(),
+        ]);
+
         // Encerra autenticação do usuário atual.
         Auth::logout();
 

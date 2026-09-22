@@ -17,7 +17,8 @@
         <div class="card-body">
             <div class="row mb-4" style="margin-right: -10px; margin-left: -10px;">
                 <div class="col-md-3 px-2 mb-2">
-                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm"
+                        style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
                         <div class="card-body py-3 d-flex flex-column justify-content-center">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <small class="text-muted mb-0">Despesas da competência</small>
@@ -30,7 +31,8 @@
                     </div>
                 </div>
                 <div class="col-md-3 px-2 mb-2">
-                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm"
+                        style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
                         <div class="card-body py-3 d-flex flex-column justify-content-center">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <small class="text-muted mb-0">Pendente da competência</small>
@@ -43,7 +45,8 @@
                     </div>
                 </div>
                 <div class="col-md-3 px-2 mb-2">
-                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm"
+                        style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
                         <div class="card-body py-3 d-flex flex-column justify-content-center">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <small class="text-muted mb-0">Saldo da competência</small>
@@ -56,7 +59,8 @@
                     </div>
                 </div>
                 <div class="col-md-3 px-2 mb-2">
-                    <div class="card h-100 border border-secondary-subtle shadow-sm" style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
+                    <div class="card h-100 border border-secondary-subtle shadow-sm"
+                        style="background: rgba(255,255,255,1); border-radius: 18px; min-height: 120px;">
                         <div class="card-body py-3 d-flex flex-column justify-content-center">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <small class="text-muted mb-0">Salário da competência</small>
