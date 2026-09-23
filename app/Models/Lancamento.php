@@ -33,12 +33,8 @@ class Lancamento extends Model
 
     public function getSituacaoAttribute(): string
     {
-        if ($this->valor_pago !== null && (float) $this->valor_pago >= (float) $this->valor) {
+        if ($this->is_pago || ($this->valor_pago !== null && (float) $this->valor_pago >= (float) $this->valor)) {
             return 'pago';
-        }
-
-        if ($this->valor_pago !== null && (float) $this->valor_pago > 0) {
-            return 'parcial';
         }
 
         return $this->data_vencimento?->isPast() ? 'vencido' : 'pendente';

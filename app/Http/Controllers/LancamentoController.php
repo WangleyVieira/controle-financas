@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LancamentoRequest;
 use App\Models\Categoria;
-use App\Models\EntradaSalario;
 use App\Models\Lancamento;
 use Carbon\Carbon;
+use App\Services\LancamentoService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -19,29 +19,10 @@ class LancamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, LancamentoService $lancamentoService)
     {
         try {
-            $competencias = Lancamento::query()->select('competencia')->distinct()->pluck('competencia');
-            $competencia = $request->input('competencia');
-
-            $situacao = $request->input('situacao');
-            $lancamentos = Lancamento::with(['categoria'])
-                ->when($competencia, fn ($query) => $query->where('competencia', $competencia))
-                ->orderBy('data_vencimento')
-                ->get()
-                ->filter(fn (Lancamento $lancamento) => !$situacao || $lancamento->situacao === $situacao);
-
-            $competenciaAtual = $competencia ?: now()->format('m/Y');
-            $resumo = [
-                'receitas' => $lancamentos->where('tipo', 'receita')->sum('valor'),
-                'despesas' => $lancamentos->where('tipo', 'despesa')->sum('valor'),
-                'pago' => $lancamentos->sum('valor_pago'),
-                'pendente' => $lancamentos->sum(fn (Lancamento $lancamento) => max(0, (float) $lancamento->valor - (float) ($lancamento->valor_pago ?? 0))),
-                'saldo_entrada_salario' => EntradaSalario::query()->where('competencia', $competenciaAtual)->sum('valor_salario'),
-            ];
-            $resumo['saldo'] = $resumo['receitas'] - $resumo['despesas'];
-            return view('lancamento.index', compact('lancamentos', 'competencia', 'situacao', 'resumo', 'competencias'));
+            return view('lancamento.index', $lancamentoService->getIndexData($request));
         } catch (\Exception $ex) {
             Alert::toast('Erro ao carregar os lançamentos.', 'error');
             return redirect()->back();

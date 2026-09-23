@@ -95,7 +95,7 @@
                         </thead>
                         <tbody>
                             @foreach ($lancamentos as $lancamento)
-                                @php($classesSituacao = ['pago' => 'success', 'parcial' => 'warning', 'pendente' => 'secondary', 'vencido' => 'danger'])
+                                @php($classesSituacao = ['pago' => 'success', 'pendente' => 'secondary', 'vencido' => 'danger'])
                                 <tr>
                                     <td>{{ $lancamento->data_vencimento?->format('d/m/Y') ?? '-' }}</td>
                                     <td>{{ $lancamento->data_pagamento?->format('d/m/Y') ?? '-' }}</td>
