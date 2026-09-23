@@ -36,9 +36,8 @@ class PerfilController extends Controller
             return redirect()->route('perfil.edit');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // Alert::toast('Erro ao atualizar o perfil.', 'error');
-            // return redirect()->back();
+            Alert::toast('Erro ao atualizar o perfil.', 'error');
+            return redirect()->back();
         }
     }
 }

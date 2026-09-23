@@ -33,8 +33,8 @@
                             Páginas
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="index.html">
+                        <li class="sidebar-item {{ Request::is('dashboard') ? 'active' : '' }}">
+                            <a class="sidebar-link" href="{{ route('dashboard') }}">
                                 <i class="align-middle fas fa-chart-line"></i> <span class="align-middle">Dashboard</span>
                             </a>
                         </li>
