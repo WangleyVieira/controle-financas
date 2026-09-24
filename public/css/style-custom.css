@@ -15,9 +15,22 @@
   --sidebar-2: #1f2937;
 }
 
+html.dark-theme {
+  --bg: #111827;
+  --card: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --line: #374151;
+}
+
 body {
   font-family: 'Manrope', 'Inter', 'Segoe UI', sans-serif !important;
   background: radial-gradient(circle at 0% 0%, #f8fafc 0, var(--bg) 46%, #e8edf5 100%) !important;
+  color: var(--text) !important;
+}
+
+html.dark-theme body {
+  background: radial-gradient(circle at 0% 0%, #1f2937 0, var(--bg) 48%, #0f172a 100%) !important;
   color: var(--text) !important;
 }
 
@@ -86,6 +99,32 @@ body {
   box-shadow: 0 4px 20px rgba(2,6,23,.06) !important;
 }
 
+html.dark-theme .navbar.navbar-bg {
+  background: rgba(17,24,39,.92) !important;
+  border-bottom-color: var(--line) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2) !important;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin: .35rem .5rem .35rem 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all .18s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(37,99,235,.12);
+  color: var(--primary);
+}
+
 .navbar .dropdown-menu {
   position: absolute !important;
   z-index: 1050 !important;
@@ -98,14 +137,62 @@ body {
   box-shadow: 0 10px 26px rgba(2,6,23,.06) !important;
 }
 
+html.dark-theme .card,
+html.dark-theme .dropdown-menu,
+html.dark-theme .modal-content,
+html.dark-theme .list-group-item {
+  background: var(--card) !important;
+  color: var(--text) !important;
+  border-color: var(--line) !important;
+}
+
 .card-header {
   background: transparent !important;
   border-bottom: 1px solid var(--line) !important;
 }
 
+html.dark-theme .card-header,
+html.dark-theme .modal-header,
+html.dark-theme .modal-footer {
+  border-color: var(--line) !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #111827 !important;
   font-weight: 800 !important;
+}
+
+html.dark-theme h1,
+html.dark-theme h2,
+html.dark-theme h3,
+html.dark-theme h4,
+html.dark-theme h5,
+html.dark-theme h6,
+html.dark-theme .text-dark,
+html.dark-theme .dropdown-item,
+html.dark-theme .nav-link {
+  color: var(--text) !important;
+}
+
+html.dark-theme .text-muted {
+  color: var(--muted) !important;
+}
+
+html.dark-theme .bg-white,
+html.dark-theme .bg-light,
+html.dark-theme .card-header.bg-white {
+  background-color: var(--card) !important;
+  color: var(--text) !important;
+}
+
+html.dark-theme .bg-light {
+  background-color: #273449 !important;
+}
+
+html.dark-theme .form-label,
+html.dark-theme .form-check-label,
+html.dark-theme label {
+  color: var(--text) !important;
 }
 
 .btn {
@@ -129,6 +216,11 @@ h1, h2, h3, h4, h5, h6 {
 .btn-danger  { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important; }
 .btn-secondary { background: #e5e7eb !important; color: #374151 !important; }
 
+html.dark-theme .btn-secondary {
+  background: #374151 !important;
+  color: #e5e7eb !important;
+}
+
 .table {
   border-collapse: separate !important;
   border-spacing: 0 !important;
@@ -143,12 +235,30 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: .06em !important;
 }
 
+html.dark-theme .table thead th {
+  background: #111827 !important;
+  color: #9ca3af !important;
+}
+
+html.dark-theme .table thead[style] {
+  background: #111827 !important;
+}
+
 .table td {
   border-top: 1px solid #edf1f6 !important;
   color: #334155 !important;
 }
 
+html.dark-theme .table td {
+  border-color: #374151 !important;
+  color: #d1d5db !important;
+}
+
 .table tbody tr:hover { background: #f8fbff !important; }
+
+html.dark-theme .table tbody tr:hover {
+  background: #273449 !important;
+}
 
 .form-control,
 .form-select,
@@ -156,6 +266,36 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #dbe2ea !important;
   border-radius: 10px !important;
   min-height: 40px !important;
+}
+
+html.dark-theme .form-control,
+html.dark-theme .form-select,
+html.dark-theme .select2-container--default .select2-selection--single,
+html.dark-theme .select2-container--default .select2-selection--multiple {
+  background-color: #111827 !important;
+  border-color: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+html.dark-theme .input-group-text {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+html.dark-theme .form-control::placeholder {
+  color: #9ca3af !important;
+}
+
+html.dark-theme .select2-dropdown,
+html.dark-theme .select2-container--default .select2-search--dropdown .select2-search__field {
+  background: #1f2937 !important;
+  border-color: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+html.dark-theme .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background: var(--primary) !important;
 }
 
 .form-control:focus,
@@ -176,6 +316,60 @@ h1, h2, h3, h4, h5, h6 {
 
 .modal-footer {
   border-top: 1px solid #eef2f7 !important;
+}
+
+html.dark-theme .modal-header,
+html.dark-theme .modal-footer {
+  background: var(--card) !important;
+}
+
+html.dark-theme .footer {
+  background: #111827 !important;
+  border-top-color: var(--line) !important;
+  color: var(--muted) !important;
+}
+
+html.dark-theme .close {
+  color: #e5e7eb !important;
+  text-shadow: none !important;
+}
+
+.dark-theme .dataTables_wrapper,
+.dark-theme .dataTables_info,
+.dark-theme .dataTables_length,
+.dark-theme .dataTables_filter,
+.dark-theme .dataTables_paginate {
+  color: var(--text) !important;
+}
+
+html.dark-theme .dataTables_wrapper .dataTables_filter input,
+html.dark-theme .dataTables_wrapper .dataTables_length select {
+  background: #111827 !important;
+  border-color: #4b5563 !important;
+  color: var(--text) !important;
+}
+
+html.dark-theme .dataTables_wrapper .dataTables_paginate .page-link {
+  background: #1f2937 !important;
+  border-color: #4b5563 !important;
+  color: #d1d5db !important;
+}
+
+html.dark-theme .dataTables_wrapper .dataTables_paginate .page-item.active .page-link {
+  background: linear-gradient(135deg, var(--primary), var(--primary-2)) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+html.dark-theme .dataTables_wrapper .dataTables_paginate .page-item.disabled .page-link {
+  background: #111827 !important;
+  color: #6b7280 !important;
+}
+
+html.dark-theme .dataTables_wrapper .dataTables_info,
+html.dark-theme .dataTables_wrapper .dataTables_length label,
+html.dark-theme .dataTables_wrapper .dataTables_filter label {
+  color: var(--muted) !important;
 }
 
 .dataTables_wrapper .dataTables_filter input,

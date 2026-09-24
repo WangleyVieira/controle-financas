@@ -17,6 +17,11 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.css"/>
         <link href="{{asset('select2-4.1.0/dist/css/select2.min.css')}}" rel="stylesheet" />
         <link rel="stylesheet" href="{{asset('select2-bootstrap/dist/select2-bootstrap.css')}}"/>
+        <script>
+            if (localStorage.getItem('controle-financas-theme') === 'dark') {
+                document.documentElement.classList.add('dark-theme');
+            }
+        </script>
         <script src="{{ asset('js/jquery.js') }}"></script>
     </head>
 
@@ -105,6 +110,12 @@
 
                     <div class="navbar-collapse collapse">
                         <ul class="navbar-nav navbar-align">
+                            <li class="nav-item">
+                                <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Aplicar tema escuro"
+                                    title="Aplicar tema escuro">
+                                    <i class="fas fa-moon"></i>
+                                </button>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
                                     <i class="align-middle" data-feather="settings"></i>
@@ -152,6 +163,34 @@
         <script src="{{ url('js/fontawesome.js') }}"></script>
         <script src="{{ url('js/functions.js') }}"></script>
         <script src="{{ url('js/prevent_multiple_submits.js') }}"></script>
+        <script>
+            (function () {
+                var html = document.documentElement;
+                var toggle = document.getElementById('theme-toggle');
+
+                if (!toggle) {
+                    return;
+                }
+
+                function atualizarBotaoTema() {
+                    var temaEscuro = html.classList.contains('dark-theme');
+                    var icone = toggle.querySelector('i');
+
+                    icone.className = temaEscuro ? 'fas fa-sun' : 'fas fa-moon';
+                    toggle.setAttribute('aria-label', temaEscuro ? 'Aplicar tema claro' : 'Aplicar tema escuro');
+                    toggle.setAttribute('title', temaEscuro ? 'Aplicar tema claro' : 'Aplicar tema escuro');
+                }
+
+                toggle.addEventListener('click', function () {
+                    var temaEscuro = html.classList.toggle('dark-theme');
+
+                    localStorage.setItem('controle-financas-theme', temaEscuro ? 'dark' : 'light');
+                    atualizarBotaoTema();
+                });
+
+                atualizarBotaoTema();
+            }());
+        </script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.0/r-2.2.9/datatables.min.js"></script>
         <script src="{{asset('select2-4.1.0/dist/js/select2.min.js')}}"></script>
         <script src="{{ asset('js/datatables.min.js') }}"></script>
