@@ -30,12 +30,21 @@ body {
 }
 
 html.dark-theme body {
-  background: radial-gradient(circle at 0% 0%, #1f2937 0, var(--bg) 48%, #0f172a 100%) !important;
+  background: #111827 !important;
   color: var(--text) !important;
 }
 
 .main { background: transparent !important; }
 .content { padding: 1.5rem !important; }
+
+html.dark-theme .main,
+html.dark-theme .content {
+  background: #111827 !important;
+}
+
+html.dark-theme .dashboard-page {
+  background: #111827 !important;
+}
 
 .sidebar,
 .sidebar.js-sidebar,
@@ -131,10 +140,12 @@ html.dark-theme .navbar.navbar-bg {
 }
 
 .card {
-  border: 1px solid rgba(148,163,184,.18) !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(148,163,184,.28) !important;
   border-radius: 14px !important;
   background: var(--card) !important;
   box-shadow: 0 10px 26px rgba(2,6,23,.06) !important;
+  overflow: hidden;
 }
 
 html.dark-theme .card,
@@ -143,7 +154,12 @@ html.dark-theme .modal-content,
 html.dark-theme .list-group-item {
   background: var(--card) !important;
   color: var(--text) !important;
-  border-color: var(--line) !important;
+  border: 1px solid var(--line) !important;
+}
+
+html.dark-theme .dashboard-page .card {
+  border-color: #374151 !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18) !important;
 }
 
 .card-header {
@@ -258,6 +274,25 @@ html.dark-theme .table td {
 
 html.dark-theme .table tbody tr:hover {
   background: #273449 !important;
+}
+
+html.dark-theme .dashboard-page .card,
+html.dark-theme .dashboard-page .card-body,
+html.dark-theme .dashboard-page .table,
+html.dark-theme .dashboard-page .table tbody,
+html.dark-theme .dashboard-page .table tbody tr {
+  background-color: #1f2937 !important;
+}
+
+html.dark-theme .dashboard-page .card-header,
+html.dark-theme .dashboard-page .table thead,
+html.dark-theme .dashboard-page .table thead th {
+  background-color: #172033 !important;
+}
+
+html.dark-theme .dashboard-page .table td,
+html.dark-theme .dashboard-page .table th {
+  border-color: #374151 !important;
 }
 
 .form-control,

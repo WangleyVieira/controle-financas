@@ -3,7 +3,7 @@
 @section('content')
     @include('sweetalert::alert')
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 dashboard-page">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h1 class="h3 mb-1"><strong>Dashboard</strong> financeiro</h1>
@@ -116,6 +116,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script>
         $(function () {
+            var temaEscuro = document.documentElement.classList.contains('dark-theme');
+            var corTextoGrafico = temaEscuro ? '#9ca3af' : '#64748b';
+            var corGradeGrafico = temaEscuro ? '#374151' : '#e5e7eb';
             var categoriaCanvas = document.getElementById('graficoCategorias');
             if (categoriaCanvas) {
                 new Chart(categoriaCanvas, {
@@ -128,7 +131,13 @@
                             borderWidth: 0
                         }]
                     },
-                    options: { maintainAspectRatio: false, legend: { position: 'bottom' } }
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: {
+                            position: 'bottom',
+                            labels: { fontColor: corTextoGrafico }
+                        }
+                    }
                 });
             }
 
@@ -145,7 +154,16 @@
                 options: {
                     maintainAspectRatio: false,
                     legend: { display: false },
-                    scales: { yAxes: [{ ticks: { beginAtZero: true } }] }
+                    scales: {
+                        yAxes: [{
+                            ticks: { beginAtZero: true, fontColor: corTextoGrafico },
+                            gridLines: { color: corGradeGrafico }
+                        }],
+                        xAxes: [{
+                            ticks: { fontColor: corTextoGrafico },
+                            gridLines: { color: corGradeGrafico }
+                        }]
+                    }
                 }
             });
         });
