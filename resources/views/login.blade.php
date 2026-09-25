@@ -13,7 +13,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
         <link rel="shortcut icon" href="{{ asset('img/icons/icon-48x48.png') }}" />
 
-        <title>Entrar | Controle-Finanças</title>
+        <title>Entrar | Conta em dia</title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/login.css') }}">
@@ -34,7 +34,7 @@
                     <!-- Logo -->
                     <div class="banner-logo">
                         <div class="banner-logo-icon">💰</div>
-                        <div class="banner-logo-text">Controle<span>-Finanças</span></div>
+                        <div class="banner-logo-text">Conta em<span> dia</span></div>
                     </div>
 
                     <!-- Headline -->

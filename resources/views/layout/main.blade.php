@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-        <title>Controle de Finanças</title>
+        <title>Conta em dia</title>
         <meta name="description" content="Sistema de controle financeiro pessoal — gerencie lançamentos, categorias e mais.">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
@@ -30,7 +30,7 @@
             <nav id="sidebar" class="sidebar js-sidebar">
                 <div class="sidebar-content js-simplebar">
                     <a class="sidebar-brand" href="index.html">
-                        <span class="align-middle">Controle de Finanças</span>
+                        <span class="align-middle">Conta em dia</span>
                     </a>
 
                     <ul class="sidebar-nav">

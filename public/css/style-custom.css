@@ -205,6 +205,16 @@ html.dark-theme .bg-light {
   background-color: #273449 !important;
 }
 
+html.dark-theme .alert-info {
+  background-color: #273449 !important;
+  border: 1px solid #374151 !important;
+  color: #d1d5db !important;
+}
+
+html.dark-theme .alert-info.text-gray-500 {
+  color: #d1d5db !important;
+}
+
 html.dark-theme .form-label,
 html.dark-theme .form-check-label,
 html.dark-theme label {

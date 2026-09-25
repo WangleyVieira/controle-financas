@@ -68,20 +68,6 @@
                                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label class="form-label">Tipo de Categoria</label>
-                                                            <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                                                <option value="" selected disabled>--Selecione--</option>
-                                                                @foreach ($tipoCategorias as $tipoCategoria)
-                                                                    <option value="{{ $tipoCategoria->id }}" {{ $categoria->tipo_categoria_id == $tipoCategoria->id ? 'selected' : '' }}>
-                                                                        {{ $tipoCategoria->descricao }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            @error('tipo_categoria_id')
-                                                                <div class="invalid-feedback">{{ $message }}</div><br>
-                                                            @enderror
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -131,7 +117,7 @@
 
     {{-- Modal para cadastrar --}}
     <div class="modal fade" id="modalCadastrar" tabindex="-1" role="dialog" aria-labelledby="modalLabelCadastrar" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content ">
                 <form method="POST" class="form_prevent_multiple_submits" action="{{ route('configuracao.categoria.store') }}">
                     @csrf
@@ -145,25 +131,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <label class="form-label">*Descrição</label>
                                 <input class="form-control @error('descricao') is-invalid @enderror" type="text" name="descricao"
                                     id="descricao" placeholder="Informe a descrição" value="{{ old('descricao') }}">
                                 @error('descricao')
-                                    <div class="invalid-feedback">{{ $message }}</div><br>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-label">Tipo de Categoria</label>
-                                <select name="tipo_categoria_id" id="tipo_categoria_id" class="form-control select2 @error('tipo_categoria_id') is-invalid @enderror">
-                                    <option value="" selected disabled>--Selecione--</option>
-                                    @foreach ($tipoCategorias as $tipoCategoria)
-                                        <option value="{{ $tipoCategoria->id }}" {{ old('tipo_categoria_id') == $tipoCategoria->id ? 'selected' : '' }}>
-                                            {{ $tipoCategoria->descricao }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('tipo_categoria_id')
                                     <div class="invalid-feedback">{{ $message }}</div><br>
                                 @enderror
                             </div>
